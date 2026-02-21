@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_vectors.dart';
@@ -47,23 +49,63 @@ class _ChooseModePageState extends State<ChooseModePage> {
                 ),
                 SizedBox(height: 53),
                 Row(
-                  mainAxisAlignment: .spaceBetween,
+                  mainAxisAlignment: .center,
                   children: [
-                    Spacer(),
                     Column(
+                      spacing: 8,
                       children: [
-                        SvgPicture.asset(AppVectors.moonIconPath),
-                        Text('Dark Mode'),
+                        ClipOval(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: .1),
+                                shape: BoxShape.circle,
+                              ),
+                              height: 80,
+                              width: 80,
+                              child: SvgPicture.asset(
+                                fit: BoxFit.none,
+                                AppVectors.moonIconPath,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'Dark Mode',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
                       ],
                     ),
-                    SizedBox(width: 58),
+
+                    SizedBox(width: 40),
+
                     Column(
+                      spacing: 8,
                       children: [
-                        SvgPicture.asset(AppVectors.sunIconPath),
-                        Text('Light Mode'),
+                        ClipOval(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: .1),
+                                shape: BoxShape.circle,
+                              ),
+                              height: 80,
+                              width: 80,
+                              child: SvgPicture.asset(
+                                fit: BoxFit.none,
+                                AppVectors.sunIconPath,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'Light Mode',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
                       ],
                     ),
-                    Spacer(),
                   ],
                 ),
                 SizedBox(height: 68),
