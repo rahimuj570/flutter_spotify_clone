@@ -2,4 +2,5 @@ class AppImages {
   static const _basePath = "assets/images/";
 
   static const introBgPath = "${_basePath}intro_bg.png";
+  static const chooseModeBfPath = '${_basePath}choose_mode_bg.png';
 }

@@ -18,13 +18,13 @@ class GetStartedPage extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
                 image: AssetImage(AppImages.introBgPath),
               ),
             ),
           ),
 
-          Container(color: Colors.black.withValues(alpha: .15)),
+          Container(color: Colors.black.withValues(alpha: .8)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 53, vertical: 69),
             child: Column(
@@ -34,20 +34,17 @@ class GetStartedPage extends StatelessWidget {
                   child: SvgPicture.asset(AppVectors.logoPath),
                 ),
                 Spacer(),
-                const Text(
+                Text(
                   'Enjoy listening to music',
-                  style: TextStyle(
-                    color: AppColors.lightTextColor,
-                    fontSize: 25,
-                    fontWeight: .bold,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleMedium!.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: 21),
-                const Text(
+                Text(
                   "Your music, your vibe, your world. Discover millions of tracks instantly. Press play and feel the rhythm.",
                   textAlign: .center,
-                  style: TextStyle(
-                    fontSize: 17,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: AppColors.lightNavBarIconColor,
                   ),
                 ),
