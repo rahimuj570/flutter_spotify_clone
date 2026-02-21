@@ -6,16 +6,14 @@ class AppTheme {
     return ThemeData(
       fontFamily: 'Satoshi',
       brightness: Brightness.light,
-      primaryColor: AppColors.primaryColor,
+      colorSchemeSeed: AppColors.primaryColor,
       scaffoldBackgroundColor: AppColors.lightBackgroundColor,
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          minimumSize: Size(double.infinity, 80),
           backgroundColor: AppColors.primaryColor,
-          textStyle: TextStyle(
-            fontSize: 20.0,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          foregroundColor: Colors.white,
+          textStyle: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
@@ -33,18 +31,15 @@ class AppTheme {
 
   static ThemeData darkTheme() {
     return ThemeData(
-      fontFamily: 'Satoshi',
       brightness: Brightness.dark,
-      primaryColor: AppColors.primaryColor,
+      colorSchemeSeed: AppColors.primaryColor,
       scaffoldBackgroundColor: AppColors.darkBackgroundColor,
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          minimumSize: Size(double.infinity, 80),
           backgroundColor: AppColors.primaryColor,
-          textStyle: TextStyle(
-            fontSize: 20.0,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          foregroundColor: Colors.white,
+          textStyle: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
