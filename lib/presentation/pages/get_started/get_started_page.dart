@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_vectors.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
+import 'package:flutter_spotify_clone/presentation/pages/choose_mode/choose_mode_page.dart';
 import 'package:flutter_spotify_clone/presentation/widgets/get_started/hero_btn_widget.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -52,7 +53,10 @@ class GetStartedPage extends StatelessWidget {
                 ),
                 SizedBox(height: 38),
 
-                HeroBtnWidget(action: _onClickGEtStarted, title: 'Get Started'),
+                HeroBtnWidget(
+                  action: () => _onClickGetStarted(context),
+                  title: 'Get Started',
+                ),
               ],
             ),
           ),
@@ -61,7 +65,7 @@ class GetStartedPage extends StatelessWidget {
     );
   }
 
-  void _onClickGEtStarted() {
-    print('object');
+  void _onClickGetStarted(BuildContext context) {
+    Navigator.pushReplacementNamed(context, ChooseModePage.name);
   }
 }
