@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_clone/core/configs/app_route.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_theme.dart';
 import 'package:flutter_spotify_clone/presentation/pages/splash/splash_page.dart';
 
@@ -15,7 +16,8 @@ class _FlutterSpotifyCloneState extends State<FlutterSpotifyClone> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme(),
-      home: SplashPage(),
+      onGenerateRoute: (settings) => AppRoute.genearateRoute(settings),
+      initialRoute: SplashPage.name,
     );
   }
 }
