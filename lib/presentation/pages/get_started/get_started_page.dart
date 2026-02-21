@@ -6,6 +6,6 @@ class GetStartedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(body: Stack());
   }
 }
