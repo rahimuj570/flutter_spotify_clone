@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_vectors.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
+import 'package:flutter_spotify_clone/presentation/provider/choose_mode/theme_provider.dart';
 import 'package:flutter_spotify_clone/presentation/widgets/get_started/hero_btn_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class ChooseModePage extends StatefulWidget {
   static const String name = '/choose_mode';
@@ -54,19 +56,26 @@ class _ChooseModePageState extends State<ChooseModePage> {
                     Column(
                       spacing: 8,
                       children: [
-                        ClipOval(
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: .1),
-                                shape: BoxShape.circle,
-                              ),
-                              height: 80,
-                              width: 80,
-                              child: SvgPicture.asset(
-                                fit: BoxFit.none,
-                                AppVectors.moonIconPath,
+                        GestureDetector(
+                          onTap: () {
+                            context.read<ThemeProvider>().changeThemeMode(
+                              isDark: true,
+                            );
+                          },
+                          child: ClipOval(
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: .1),
+                                  shape: BoxShape.circle,
+                                ),
+                                height: 80,
+                                width: 80,
+                                child: SvgPicture.asset(
+                                  fit: BoxFit.none,
+                                  AppVectors.moonIconPath,
+                                ),
                               ),
                             ),
                           ),
@@ -83,19 +92,26 @@ class _ChooseModePageState extends State<ChooseModePage> {
                     Column(
                       spacing: 8,
                       children: [
-                        ClipOval(
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: .1),
-                                shape: BoxShape.circle,
-                              ),
-                              height: 80,
-                              width: 80,
-                              child: SvgPicture.asset(
-                                fit: BoxFit.none,
-                                AppVectors.sunIconPath,
+                        GestureDetector(
+                          onTap: () {
+                            context.read<ThemeProvider>().changeThemeMode(
+                              isDark: false,
+                            );
+                          },
+                          child: ClipOval(
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: .1),
+                                  shape: BoxShape.circle,
+                                ),
+                                height: 80,
+                                width: 80,
+                                child: SvgPicture.asset(
+                                  fit: BoxFit.none,
+                                  AppVectors.sunIconPath,
+                                ),
                               ),
                             ),
                           ),

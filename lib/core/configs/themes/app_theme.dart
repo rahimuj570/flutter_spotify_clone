@@ -51,6 +51,7 @@ class AppTheme {
 
   static ThemeData darkTheme() {
     return ThemeData(
+      fontFamily: 'Satoshi',
       brightness: Brightness.dark,
       colorSchemeSeed: AppColors.primaryColor,
       scaffoldBackgroundColor: AppColors.darkBackgroundColor,
