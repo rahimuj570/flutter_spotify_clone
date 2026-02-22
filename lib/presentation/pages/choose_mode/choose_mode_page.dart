@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_vectors.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
+import 'package:flutter_spotify_clone/presentation/pages/auth/signup_or_signin_page.dart';
 import 'package:flutter_spotify_clone/presentation/provider/choose_mode/theme_provider.dart';
 import 'package:flutter_spotify_clone/presentation/widgets/get_started/hero_btn_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -125,7 +126,12 @@ class _ChooseModePageState extends State<ChooseModePage> {
                   ],
                 ),
                 SizedBox(height: 68),
-                HeroBtnWidget(action: () {}, title: 'Continue'),
+                HeroBtnWidget(
+                  action: () {
+                    Navigator.pushNamed(context, SignupOrSigninPage.name);
+                  },
+                  title: 'Continue',
+                ),
               ],
             ),
           ),
