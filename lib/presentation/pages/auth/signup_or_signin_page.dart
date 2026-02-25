@@ -3,6 +3,7 @@ import 'package:flutter_spotify_clone/common/extensions/is_dark_mode_extension.d
 import 'package:flutter_spotify_clone/common/widgets/common_appbar.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_vectors.dart';
+import 'package:flutter_spotify_clone/presentation/pages/auth/signin_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SignupOrSigninPage extends StatelessWidget {
@@ -56,7 +57,9 @@ class SignupOrSigninPage extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, SigninPage.name);
+                        },
                         child: Text(
                           'Signin',
                           style: TextStyle(

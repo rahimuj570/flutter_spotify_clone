@@ -20,7 +20,12 @@ class AppTheme {
         ),
       ),
       inputDecorationTheme: InputDecorationThemeData(
-        hintStyle: TextStyle(color: AppColors.lightHintTextColor),
+        contentPadding: .all(25),
+        hintStyle: TextStyle(
+          color: AppColors.lightHintTextColor,
+          fontWeight: .w500,
+          fontSize: 16,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(color: Colors.black, width: 1),
@@ -29,18 +34,10 @@ class AppTheme {
 
       textTheme: ThemeData.light().textTheme.copyWith(
         titleMedium: TextStyle(fontSize: 25, fontWeight: .bold),
-        bodyLarge: TextStyle(
-          fontSize: 20,
-          fontWeight: .w600,
-          color: AppColors.lightTextColor,
-        ),
+        bodyLarge: TextStyle(fontSize: 20, fontWeight: .w600),
         bodyMedium: TextStyle(fontSize: 17),
-        bodySmall: TextStyle(fontSize: 12, color: AppColors.lightTextColor),
-        titleLarge: TextStyle(
-          fontSize: 30,
-          fontWeight: .bold,
-          color: AppColors.lightTextColor,
-        ),
+        bodySmall: TextStyle(fontSize: 12),
+        titleLarge: TextStyle(fontSize: 30, fontWeight: .bold),
       ),
     );
   }
@@ -63,7 +60,12 @@ class AppTheme {
         ),
       ),
       inputDecorationTheme: InputDecorationThemeData(
-        hintStyle: TextStyle(color: AppColors.darkHintTextColor),
+        contentPadding: .all(25),
+        hintStyle: TextStyle(
+          color: AppColors.darkHintTextColor,
+          fontWeight: .w500,
+          fontSize: 16,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(color: Colors.white, width: 1),

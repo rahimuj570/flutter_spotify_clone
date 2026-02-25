@@ -16,15 +16,17 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: AppBar(
-        backgroundColor: Colors.transparent,
-        title: titleShow
-            ? SvgPicture.asset(width: 108, AppVectors.logoPath)
-            : null,
-        centerTitle: true,
-        leading: IconButton(
+    return AppBar(
+      surfaceTintColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
+      title: titleShow
+          ? SvgPicture.asset(width: 108, AppVectors.logoPath)
+          : null,
+      centerTitle: true,
+
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
@@ -43,15 +45,10 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
                 : Icon(Icons.arrow_back_ios_new, size: 15),
           ),
         ),
-        actions: actionMenuShow
-            ? [
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.more_vert_outlined),
-                ),
-              ]
-            : [],
       ),
+      actions: actionMenuShow
+          ? [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_outlined))]
+          : [],
     );
   }
 
