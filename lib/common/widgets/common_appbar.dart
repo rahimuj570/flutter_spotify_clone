@@ -16,34 +16,42 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      title: titleShow
-          ? SvgPicture.asset(width: 108, AppVectors.logoPath)
-          : null,
-      centerTitle: true,
-      leading: IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        icon: Container(
-          alignment: Alignment.center,
-          height: 30,
-          width: 30,
-          decoration: BoxDecoration(
-            color: context.isDarkMode
-                ? Colors.white.withValues(alpha: .03)
-                : Colors.black.withValues(alpha: .04),
-            shape: BoxShape.circle,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: AppBar(
+        backgroundColor: Colors.transparent,
+        title: titleShow
+            ? SvgPicture.asset(width: 108, AppVectors.logoPath)
+            : null,
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Container(
+            alignment: Alignment.center,
+            height: 30,
+            width: 30,
+            decoration: BoxDecoration(
+              color: context.isDarkMode
+                  ? Colors.white.withValues(alpha: .03)
+                  : Colors.black.withValues(alpha: .04),
+              shape: BoxShape.circle,
+            ),
+            child: isLeadingSearch
+                ? Icon(Icons.search_rounded)
+                : Icon(Icons.arrow_back_ios_new, size: 15),
           ),
-          child: isLeadingSearch
-              ? Icon(Icons.search_rounded)
-              : Icon(Icons.arrow_back_ios_new, size: 15),
         ),
+        actions: actionMenuShow
+            ? [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.more_vert_outlined),
+                ),
+              ]
+            : [],
       ),
-      actions: actionMenuShow
-          ? [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_outlined))]
-          : [],
     );
   }
 

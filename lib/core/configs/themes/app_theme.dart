@@ -28,17 +28,13 @@ class AppTheme {
       ),
 
       textTheme: ThemeData.light().textTheme.copyWith(
-        titleMedium: TextStyle(
-          fontSize: 25,
-          fontWeight: .bold,
-          color: AppColors.lightTextColor,
-        ),
+        titleMedium: TextStyle(fontSize: 25, fontWeight: .bold),
         bodyLarge: TextStyle(
           fontSize: 20,
           fontWeight: .w600,
           color: AppColors.lightTextColor,
         ),
-        bodyMedium: TextStyle(fontSize: 17, color: AppColors.lightTextColor),
+        bodyMedium: TextStyle(fontSize: 17),
         bodySmall: TextStyle(fontSize: 12, color: AppColors.lightTextColor),
         titleLarge: TextStyle(
           fontSize: 30,

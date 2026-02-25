@@ -3,4 +3,5 @@ class AppImages {
 
   static const introBgPath = "${_basePath}intro_bg.png";
   static const chooseModeBfPath = '${_basePath}choose_mode_bg.png';
+  static const authImagePath = "${_basePath}auth_bg.png";
 }

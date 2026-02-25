@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_clone/common/extensions/is_dark_mode_extension.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_vectors.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
@@ -83,7 +84,12 @@ class _ChooseModePageState extends State<ChooseModePage> {
                         ),
                         Text(
                           'Dark Mode',
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .copyWith(
+                                color: !context.isDarkMode
+                                    ? Colors.white
+                                    : null,
+                              ),
                         ),
                       ],
                     ),
@@ -119,7 +125,12 @@ class _ChooseModePageState extends State<ChooseModePage> {
                         ),
                         Text(
                           'Light Mode',
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .copyWith(
+                                color: !context.isDarkMode
+                                    ? Colors.white
+                                    : null,
+                              ),
                         ),
                       ],
                     ),
