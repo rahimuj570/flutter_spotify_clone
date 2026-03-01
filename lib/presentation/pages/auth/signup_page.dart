@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/common/widgets/common_appbar.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
-import 'package:flutter_spotify_clone/presentation/pages/auth/signup_page.dart';
+import 'package:flutter_spotify_clone/presentation/pages/auth/signin_page.dart';
 
-class SigninPage extends StatelessWidget {
-  static const String name = "/signin_page";
-  const SigninPage({super.key});
+class SignupPage extends StatelessWidget {
+  static const String name = "/signup_page";
+  const SignupPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class SigninPage extends StatelessWidget {
                 children: [
                   SizedBox(height: 80),
                   Text(
-                    'Sign in',
+                    'Register',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 22),
@@ -51,9 +51,11 @@ class SigninPage extends StatelessWidget {
                     child: Column(
                       children: [
                         TextFormField(
-                          decoration: InputDecoration(
-                            hintText: "Enter Username or Email",
-                          ),
+                          decoration: InputDecoration(hintText: "Full Name"),
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          decoration: InputDecoration(hintText: "Email"),
                         ),
                         SizedBox(height: 16),
                         TextFormField(
@@ -68,17 +70,11 @@ class SigninPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 16),
-                        Align(
-                          alignment: AlignmentGeometry.centerLeft,
-                          child: TextButton(
-                            onPressed: () {},
-                            child: Text('Reset Password'),
-                          ),
-                        ),
+
                         SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: () {},
-                          child: Text("Sign in"),
+                          child: Text("Create Account"),
                         ),
                         SizedBox(height: 16),
                         Row(
@@ -100,7 +96,7 @@ class SigninPage extends StatelessWidget {
                         SizedBox(height: 50),
                         RichText(
                           text: TextSpan(
-                            text: "Not A Member ? ",
+                            text: "Already Have An Account ? ",
                             style: Theme.of(context).textTheme.bodySmall,
                             children: [
                               TextSpan(
@@ -108,10 +104,10 @@ class SigninPage extends StatelessWidget {
                                   ..onTap = () {
                                     Navigator.pushNamed(
                                       context,
-                                      SignupPage.name,
+                                      SigninPage.name,
                                     );
                                   },
-                                text: "Register Now",
+                                text: "Sign In",
                                 style: TextStyle(color: Colors.blue),
                               ),
                             ],

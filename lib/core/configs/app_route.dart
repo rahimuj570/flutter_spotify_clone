@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/presentation/pages/auth/signin_page.dart';
 import 'package:flutter_spotify_clone/presentation/pages/auth/signup_or_signin_page.dart';
+import 'package:flutter_spotify_clone/presentation/pages/auth/signup_page.dart';
 import 'package:flutter_spotify_clone/presentation/pages/choose_mode/choose_mode_page.dart';
 import 'package:flutter_spotify_clone/presentation/pages/get_started/get_started_page.dart';
 import 'package:flutter_spotify_clone/presentation/pages/splash/splash_page.dart';
@@ -24,6 +25,8 @@ class AppRoute {
       case SigninPage.name:
         widget = SigninPage();
         break;
+      case SignupPage.name:
+        widget = SignupPage();
       default:
         widget = Placeholder();
     }
