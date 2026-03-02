@@ -49,3 +49,6 @@ app.*.map.json
 
 firebase.json
 lib/firebase_options.dart
+android/app/google-services.json
+/media/rahimuj570/Projects/flutter_ubuntu/flutter_spotify_clone/android/app/google-services.json
+android/app/google-services.json

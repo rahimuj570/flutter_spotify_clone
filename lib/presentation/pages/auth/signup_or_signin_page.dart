@@ -4,6 +4,7 @@ import 'package:flutter_spotify_clone/common/widgets/common_appbar.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_vectors.dart';
 import 'package:flutter_spotify_clone/presentation/pages/auth/signin_page.dart';
+import 'package:flutter_spotify_clone/presentation/pages/auth/signup_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SignupOrSigninPage extends StatelessWidget {
@@ -52,7 +53,9 @@ class SignupOrSigninPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, SignupPage.name);
+                          },
                           child: Text('Register'),
                         ),
                       ),
@@ -61,7 +64,7 @@ class SignupOrSigninPage extends StatelessWidget {
                           Navigator.pushNamed(context, SigninPage.name);
                         },
                         child: Text(
-                          'Signin',
+                          'Sign In',
                           style: TextStyle(
                             fontSize: 19,
                             fontWeight: .w500,
