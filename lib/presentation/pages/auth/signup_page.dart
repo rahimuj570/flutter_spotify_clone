@@ -1,16 +1,28 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_clone/common/helper/show_snackbar.dart';
 import 'package:flutter_spotify_clone/common/widgets/common_appbar.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
 import 'package:flutter_spotify_clone/presentation/pages/auth/signin_page.dart';
+import 'package:flutter_spotify_clone/presentation/provider/auth/signup_provider.dart';
+import 'package:provider/provider.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   static const String name = "/signup_page";
   const SignupPage({super.key});
 
   @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> fKey = GlobalKey<FormState>();
+    final TextEditingController fullNameTEC = TextEditingController();
+    final TextEditingController emailTEC = TextEditingController();
+    final TextEditingController passwordTEC = TextEditingController();
     return Scaffold(
       appBar: CommonAppbar(
         titleShow: true,
@@ -48,17 +60,21 @@ class SignupPage extends StatelessWidget {
                   ),
                   SizedBox(height: 38),
                   Form(
+                    key: fKey,
                     child: Column(
                       children: [
                         TextFormField(
+                          controller: fullNameTEC,
                           decoration: InputDecoration(hintText: "Full Name"),
                         ),
                         SizedBox(height: 16),
                         TextFormField(
+                          controller: emailTEC,
                           decoration: InputDecoration(hintText: "Email"),
                         ),
                         SizedBox(height: 16),
                         TextFormField(
+                          controller: passwordTEC,
                           decoration: InputDecoration(
                             hintText: "Password",
                             suffix: GestureDetector(
@@ -72,9 +88,39 @@ class SignupPage extends StatelessWidget {
                         SizedBox(height: 16),
 
                         SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Create Account"),
+                        Consumer<SignupProvider>(
+                          builder: (context, signupProvider, child) =>
+                              Visibility(
+                                visible:
+                                    signupProvider.getIsCreatingUser == false,
+                                replacement: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    await signupProvider.createUser(
+                                      fullName: fullNameTEC.text,
+                                      email: emailTEC.text,
+                                      password: passwordTEC.text,
+                                    );
+
+                                    var r = await signupProvider.getResponse;
+                                    r.fold(
+                                      (l) {
+                                        showSnackBar(
+                                          context: context,
+                                          msg: l,
+                                          isSuccess: false,
+                                        );
+                                      },
+                                      (r) {
+                                        showSnackBar(context: context, msg: r);
+                                      },
+                                    );
+                                  },
+                                  child: Text("Create Account"),
+                                ),
+                              ),
                         ),
                         SizedBox(height: 16),
                         Row(
