@@ -1,19 +1,27 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_spotify_clone/data/models/auth/requests/create_user_request.dart';
+import 'package:flutter_spotify_clone/data/models/auth/requests/signin_user_request.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class AuthFirebaseService {
-  Future<Either> signin();
+  Future<Either> signin(SigninUserRequest signinUserRequest);
   Future<Either> signinWithGoogle();
   Future<Either> signup(CreateUserRequest createUserRequest);
 }
 
 class AuthFirebaseServiceImpl implements AuthFirebaseService {
   @override
-  Future<Either> signin() {
-    // TODO: implement signin
-    throw UnimplementedError();
+  Future<Either> signin(SigninUserRequest param) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: param.email,
+        password: param.password,
+      );
+      return Right("Successfully Signin!");
+    } on FirebaseAuthException catch (e) {
+      return Left(e.message);
+    }
   }
 
   @override

@@ -1,9 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_clone/common/helper/show_snackbar.dart';
 import 'package:flutter_spotify_clone/common/widgets/common_appbar.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
+import 'package:flutter_spotify_clone/data/models/auth/requests/signin_user_request.dart';
 import 'package:flutter_spotify_clone/presentation/pages/auth/signup_page.dart';
+import 'package:flutter_spotify_clone/presentation/pages/root_page.dart';
+import 'package:flutter_spotify_clone/presentation/provider/auth/signin_provider.dart';
+import 'package:provider/provider.dart';
 
 class SigninPage extends StatelessWidget {
   static const String name = "/signin_page";
@@ -11,6 +16,9 @@ class SigninPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> fkey = GlobalKey<FormState>();
+    TextEditingController email = TextEditingController();
+    TextEditingController password = TextEditingController();
     return Scaffold(
       appBar: CommonAppbar(
         titleShow: true,
@@ -19,7 +27,7 @@ class SigninPage extends StatelessWidget {
       ),
       body: GestureDetector(
         onTap: () {
-          FocusScope.of(context).unfocus();
+          FocusManager.instance.primaryFocus?.unfocus();
         },
         child: SingleChildScrollView(
           child: Center(
@@ -48,12 +56,18 @@ class SigninPage extends StatelessWidget {
                   ),
                   SizedBox(height: 38),
                   Form(
+                    key: fkey,
                     child: Column(
                       children: [
                         TextFormField(
                           decoration: InputDecoration(
                             hintText: "Enter Username or Email",
                           ),
+                          controller: email,
+                          autovalidateMode: .onUserInteraction,
+                          validator: (value) => value == ""
+                              ? "Need to input a valid email"
+                              : null,
                         ),
                         SizedBox(height: 16),
                         TextFormField(
@@ -66,6 +80,11 @@ class SigninPage extends StatelessWidget {
                               child: Icon(Icons.remove_red_eye),
                             ),
                           ),
+                          controller: password,
+                          validator: (value) => value == ""
+                              ? "Need to input a valid password"
+                              : null,
+                          autovalidateMode: .onUserInteraction,
                         ),
                         SizedBox(height: 16),
                         Align(
@@ -76,9 +95,51 @@ class SigninPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Sign in"),
+                        Consumer<SigninProvider>(
+                          builder: (context, signinProvider, child) =>
+                              Visibility(
+                                visible:
+                                    signinProvider.getIsSigninProcessing ==
+                                    false,
+                                replacement: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    if (fkey.currentState!.validate()) {
+                                      await signinProvider.signin(
+                                        withPassword: true,
+                                        withGoogle: false,
+                                        withApple: false,
+                                        signinUserRequest: SigninUserRequest(
+                                          email: email.text.trim(),
+                                          password: password.text.trim(),
+                                        ),
+                                      );
+
+                                      var r = signinProvider.getResponse;
+
+                                      r.fold(
+                                        (l) {
+                                          showSnackBar(
+                                            context: context,
+                                            msg: l,
+                                            isSuccess: false,
+                                          );
+                                        },
+                                        (r) {
+                                          Navigator.pushReplacementNamed(
+                                            context,
+                                            RootPage.name,
+                                          );
+                                        },
+                                      );
+                                    }
+                                  },
+                                  child: Text("Sign in"),
+                                ),
+                              ),
                         ),
                         SizedBox(height: 16),
                         Row(
@@ -93,7 +154,34 @@ class SigninPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: .spaceEvenly,
                           children: [
-                            Image.asset(AppImages.googleIcon),
+                            GestureDetector(
+                              onTap: () async {
+                                final provider = context.read<SigninProvider>();
+                                await provider.signin(
+                                  withPassword: false,
+                                  withGoogle: true,
+                                  withApple: false,
+                                );
+
+                                var r = provider.getResponse;
+                                r.fold(
+                                  (l) {
+                                    showSnackBar(
+                                      context: context,
+                                      msg: l,
+                                      isSuccess: false,
+                                    );
+                                  },
+                                  (r) {
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      RootPage.name,
+                                    );
+                                  },
+                                );
+                              },
+                              child: Image.asset(AppImages.googleIcon),
+                            ),
                             Image.asset(AppImages.appleIcon),
                           ],
                         ),

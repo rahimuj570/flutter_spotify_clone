@@ -71,11 +71,19 @@ class _SignupPageState extends State<SignupPage> {
                         TextFormField(
                           controller: fullNameTEC,
                           decoration: InputDecoration(hintText: "Full Name"),
+                          validator: (value) =>
+                              value == "" ? "Need to input a valid name" : null,
+                          autovalidateMode: .onUserInteraction,
                         ),
                         SizedBox(height: 16),
                         TextFormField(
                           controller: emailTEC,
                           decoration: InputDecoration(hintText: "Email"),
+                          validator: (value) => value == ""
+                              ? "Need to input a valid email"
+                              : null,
+
+                          autovalidateMode: .onUserInteraction,
                         ),
                         SizedBox(height: 16),
                         TextFormField(
@@ -89,6 +97,10 @@ class _SignupPageState extends State<SignupPage> {
                               child: Icon(Icons.remove_red_eye),
                             ),
                           ),
+                          validator: (value) => value == ""
+                              ? "Need to input a valid password"
+                              : null,
+                          autovalidateMode: .onUserInteraction,
                         ),
                         SizedBox(height: 16),
 
@@ -103,28 +115,30 @@ class _SignupPageState extends State<SignupPage> {
                                 ),
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    await signupProvider.createUser(
-                                      fullName: fullNameTEC.text,
-                                      email: emailTEC.text,
-                                      password: passwordTEC.text,
-                                    );
+                                    if (fKey.currentState!.validate()) {
+                                      await signupProvider.createUser(
+                                        fullName: fullNameTEC.text,
+                                        email: emailTEC.text,
+                                        password: passwordTEC.text,
+                                      );
 
-                                    var r = signupProvider.getResponse;
-                                    r.fold(
-                                      (l) {
-                                        showSnackBar(
-                                          context: context,
-                                          msg: l,
-                                          isSuccess: false,
-                                        );
-                                      },
-                                      (r) {
-                                        Navigator.pushReplacementNamed(
-                                          context,
-                                          RootPage.name,
-                                        );
-                                      },
-                                    );
+                                      var r = signupProvider.getResponse;
+                                      r.fold(
+                                        (l) {
+                                          showSnackBar(
+                                            context: context,
+                                            msg: l,
+                                            isSuccess: false,
+                                          );
+                                        },
+                                        (r) {
+                                          Navigator.pushReplacementNamed(
+                                            context,
+                                            RootPage.name,
+                                          );
+                                        },
+                                      );
+                                    }
                                   },
                                   child: Text("Create Account"),
                                 ),

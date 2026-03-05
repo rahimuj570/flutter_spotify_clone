@@ -7,6 +7,6 @@ import 'package:flutter_spotify_clone/service_locator.dart';
 class SigninUsecase implements Usecase<Either, SigninUserRequest> {
   @override
   Future<Either<dynamic, dynamic>> call(SigninUserRequest param) {
-    return getIt<AuthRepository>().signin();
+    return getIt<AuthRepository>().signin(param);
   }
 }
