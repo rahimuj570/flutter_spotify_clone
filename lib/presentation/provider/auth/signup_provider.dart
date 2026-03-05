@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spotify_clone/data/models/create_user_request.dart';
+import 'package:flutter_spotify_clone/data/models/auth/requests/create_user_request.dart';
 import 'package:flutter_spotify_clone/domain/usecases/auth/signup_usecase.dart';
 import 'package:flutter_spotify_clone/service_locator.dart';
 

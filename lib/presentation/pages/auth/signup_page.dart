@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/common/helper/show_snackbar.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_spotify_clone/common/widgets/common_appbar.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
 import 'package:flutter_spotify_clone/presentation/pages/auth/signin_page.dart';
+import 'package:flutter_spotify_clone/presentation/provider/auth/signin_provider.dart';
 import 'package:flutter_spotify_clone/presentation/provider/auth/signup_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -30,10 +32,12 @@ class _SignupPageState extends State<SignupPage> {
         actionMenuShow: false,
       ),
       body: GestureDetector(
+        behavior: .translucent,
         onTap: () {
-          FocusScope.of(context).unfocus();
+          FocusManager.instance.primaryFocus?.unfocus();
         },
         child: SingleChildScrollView(
+          keyboardDismissBehavior: .onDrag,
           child: Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28.0),
@@ -104,7 +108,7 @@ class _SignupPageState extends State<SignupPage> {
                                       password: passwordTEC.text,
                                     );
 
-                                    var r = await signupProvider.getResponse;
+                                    var r = signupProvider.getResponse;
                                     r.fold(
                                       (l) {
                                         showSnackBar(
@@ -135,8 +139,45 @@ class _SignupPageState extends State<SignupPage> {
                         Row(
                           mainAxisAlignment: .spaceEvenly,
                           children: [
-                            Image.asset(AppImages.googleIcon),
-                            Image.asset(AppImages.appleIcon),
+                            GestureDetector(
+                              onTap: () async {
+                                final provider = context.read<SigninProvider>();
+                                await provider.signin(
+                                  withPassword: false,
+                                  withGoogle: true,
+                                  withApple: false,
+                                );
+
+                                var r = provider.getResponse;
+                                r.fold(
+                                  (l) {
+                                    showSnackBar(
+                                      context: context,
+                                      msg: l,
+                                      isSuccess: false,
+                                    );
+                                  },
+                                  (r) {
+                                    showSnackBar(context: context, msg: r);
+                                  },
+                                );
+                              },
+
+                              child: Image.asset(AppImages.googleIcon),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                // To debugging. or now skipping apple login
+                                print(
+                                  FirebaseAuth
+                                      .instance
+                                      .currentUser
+                                      ?.displayName,
+                                );
+                                print(FirebaseAuth.instance.currentUser);
+                              },
+                              child: Image.asset(AppImages.appleIcon),
+                            ),
                           ],
                         ),
                         SizedBox(height: 50),
