@@ -6,6 +6,7 @@ import 'package:flutter_spotify_clone/common/widgets/common_appbar.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
 import 'package:flutter_spotify_clone/presentation/pages/auth/signin_page.dart';
+import 'package:flutter_spotify_clone/presentation/pages/root_page.dart';
 import 'package:flutter_spotify_clone/presentation/provider/auth/signin_provider.dart';
 import 'package:flutter_spotify_clone/presentation/provider/auth/signup_provider.dart';
 import 'package:provider/provider.dart';
@@ -118,7 +119,10 @@ class _SignupPageState extends State<SignupPage> {
                                         );
                                       },
                                       (r) {
-                                        showSnackBar(context: context, msg: r);
+                                        Navigator.pushReplacementNamed(
+                                          context,
+                                          RootPage.name,
+                                        );
                                       },
                                     );
                                   },
@@ -158,7 +162,10 @@ class _SignupPageState extends State<SignupPage> {
                                     );
                                   },
                                   (r) {
-                                    showSnackBar(context: context, msg: r);
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      RootPage.name,
+                                    );
                                   },
                                 );
                               },
