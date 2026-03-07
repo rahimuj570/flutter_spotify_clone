@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_spotify_clone/data/models/auth/requests/create_user_request.dart';
@@ -41,7 +42,10 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
       );
 
       FirebaseAuth.instance.signInWithCredential(credential);
-
+      _saveUserInFirestore(
+        email: account.email,
+        name: account.displayName ?? '',
+      );
       return Right("Successfully Loggd in!");
     } catch (e) {
       print(e.toString());
@@ -58,6 +62,10 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
       );
       FirebaseAuth.instance.currentUser!.updateDisplayName(
         createUserRequest.fullName,
+      );
+      _saveUserInFirestore(
+        email: createUserRequest.email,
+        name: createUserRequest.fullName,
       );
       return Right('Successfully User Created');
     } on FirebaseAuthException catch (e) {
@@ -78,6 +86,21 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
       }
 
       return Left(errorMgs);
+    }
+  }
+
+  void _saveUserInFirestore({
+    required String email,
+    required String name,
+  }) async {
+    final usersRef = FirebaseFirestore.instance.collection('users');
+
+    // Check if a user with this email already exists
+    final existingUser = await usersRef.where('email', isEqualTo: email).get();
+
+    if (existingUser.docs.isEmpty) {
+      // Only add if not found
+      usersRef.add({'fullName': name, 'email': email});
     }
   }
 }
