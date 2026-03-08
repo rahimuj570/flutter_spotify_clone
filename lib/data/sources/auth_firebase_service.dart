@@ -37,7 +37,7 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
 
       GoogleSignInAuthentication gAuth = account.authentication;
 
-      AuthCredential credential = await GoogleAuthProvider.credential(
+      AuthCredential credential = GoogleAuthProvider.credential(
         idToken: gAuth.idToken,
       );
 
