@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_vectors.dart';
-import 'package:flutter_spotify_clone/data/sources/auth_firebase_service.dart';
+import 'package:flutter_spotify_clone/data/sources/auth/auth_firebase_service.dart';
 import 'package:flutter_spotify_clone/presentation/pages/get_started/get_started_page.dart';
 import 'package:flutter_spotify_clone/presentation/pages/root_page.dart';
 import 'package:flutter_spotify_clone/service_locator.dart';
