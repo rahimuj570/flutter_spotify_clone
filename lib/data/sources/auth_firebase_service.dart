@@ -3,12 +3,14 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_spotify_clone/data/models/auth/requests/create_user_request.dart';
 import 'package:flutter_spotify_clone/data/models/auth/requests/signin_user_request.dart';
+import 'package:flutter_spotify_clone/domain/entities/auth/user_entity.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class AuthFirebaseService {
   Future<Either> signin(SigninUserRequest signinUserRequest);
   Future<Either> signinWithGoogle();
   Future<Either> signup(CreateUserRequest createUserRequest);
+  UserEntity? getUser();
 }
 
 class AuthFirebaseServiceImpl implements AuthFirebaseService {
@@ -102,5 +104,18 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
       // Only add if not found
       usersRef.add({'fullName': name, 'email': email});
     }
+  }
+
+  @override
+  UserEntity? getUser() {
+    User? u = FirebaseAuth.instance.currentUser;
+    if (u != null) {
+      return UserEntity(
+        fullName: u.displayName!,
+        email: u.email!,
+        userId: u.uid,
+      );
+    }
+    return null;
   }
 }
