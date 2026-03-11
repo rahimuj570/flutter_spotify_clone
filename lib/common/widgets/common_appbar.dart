@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spotify_clone/common/extensions/is_dark_mode_extension.dart';
+import 'package:flutter_spotify_clone/core/extensions/is_dark_mode_extension.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_vectors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spotify_clone/presentation/pages/auth/signin_page.dart';
-import 'package:flutter_spotify_clone/presentation/pages/auth/signup_or_signin_page.dart';
-import 'package:flutter_spotify_clone/presentation/pages/auth/signup_page.dart';
-import 'package:flutter_spotify_clone/presentation/pages/choose_mode/choose_mode_page.dart';
-import 'package:flutter_spotify_clone/presentation/pages/get_started/get_started_page.dart';
-import 'package:flutter_spotify_clone/presentation/pages/root_page.dart';
-import 'package:flutter_spotify_clone/presentation/pages/splash/splash_page.dart';
+import 'package:flutter_spotify_clone/features/auth/presentation/pages/signin_page.dart';
+import 'package:flutter_spotify_clone/features/auth/presentation/pages/signup_or_signin_page.dart';
+import 'package:flutter_spotify_clone/features/auth/presentation/pages/signup_page.dart';
+import 'package:flutter_spotify_clone/features/choose_mode/presentation/pages/choose_mode_page.dart';
+import 'package:flutter_spotify_clone/features/get_started/presentation/pages/get_started_page.dart';
+import 'package:flutter_spotify_clone/features/home/presentation/pages/home_page.dart';
+import 'package:flutter_spotify_clone/features/splash/presentation/pages/splash_page.dart';
 
 class AppRoute {
   static Route<dynamic>? genearateRoute(RouteSettings settings) {
@@ -28,8 +28,8 @@ class AppRoute {
         break;
       case SignupPage.name:
         widget = SignupPage();
-      case RootPage.name:
-        widget = RootPage();
+      case HomePage.name:
+        widget = HomePage();
       default:
         widget = Placeholder();
     }
