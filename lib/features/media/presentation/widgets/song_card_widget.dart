@@ -4,7 +4,6 @@ import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
 import 'package:flutter_spotify_clone/core/extensions/is_dark_mode_extension.dart';
 import 'package:flutter_spotify_clone/features/common/presentation/widgets/overflow_aware_text.dart';
 import 'package:flutter_spotify_clone/features/media/domain/entities/song_entity.dart';
-import 'package:marquee/marquee.dart';
 
 class SongCardWidget extends StatelessWidget {
   final SongEntity song;
@@ -60,18 +59,19 @@ class SongCardWidget extends StatelessWidget {
               Text(
                 song.title,
                 overflow: .ellipsis,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(fontWeight: .bold),
               ),
               OverflowAwareText(
                 text: song.artists,
                 maxWidth: 150,
-                // style: const TextStyle(fontSize: 12),
+                style: const TextStyle(fontSize: 14),
               ),
             ],
           ),
         ),
       ],
     );
-    ;
   }
 }

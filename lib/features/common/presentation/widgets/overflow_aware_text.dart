@@ -47,7 +47,7 @@ class OverflowAwareText extends StatelessWidget {
           text: text,
           style: style,
           scrollAxis: Axis.horizontal,
-          blankSpace: 40.0,
+          blankSpace: 20.0,
           velocity: 40.0,
           pauseAfterRound: const Duration(seconds: 1),
         ),
