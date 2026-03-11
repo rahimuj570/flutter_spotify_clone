@@ -6,12 +6,14 @@ class SongResponse {
   final String artists;
   final double duration;
   final Timestamp releaseDate;
+  final String media;
 
   SongResponse({
     required this.title,
     required this.artists,
     required this.duration,
     required this.releaseDate,
+    required this.media,
   });
 
   factory SongResponse.fromJson(Map<String, dynamic> map) {
@@ -20,6 +22,7 @@ class SongResponse {
       artists: map['artists'] as String,
       duration: map['duration'] as double,
       releaseDate: map['releaseDate'] as Timestamp,
+      media: map['media'],
     );
   }
 
@@ -29,6 +32,7 @@ class SongResponse {
       artists: artists,
       duration: duration,
       releaseDate: releaseDate,
+      media: media,
     );
   }
 }

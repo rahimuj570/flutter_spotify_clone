@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/extensions/is_dark_mode_extension.dart';
-import 'package:flutter_spotify_clone/common/widgets/common_appbar.dart';
+import 'package:flutter_spotify_clone/features/common/presentation/widgets/common_appbar.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_vectors.dart';
 import 'package:flutter_spotify_clone/features/auth/presentation/pages/signin_page.dart';

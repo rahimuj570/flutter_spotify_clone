@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/configs/app_route.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_theme.dart';
+import 'package:flutter_spotify_clone/features/media/presentation/provders/new_song_provider.dart';
 import 'package:flutter_spotify_clone/features/splash/presentation/pages/splash_page.dart';
 import 'package:flutter_spotify_clone/features/auth/presentation/providers/signin_provider.dart';
 import 'package:flutter_spotify_clone/features/auth/presentation/providers/signup_provider.dart';
@@ -22,6 +23,7 @@ class _FlutterSpotifyCloneState extends State<FlutterSpotifyClone> {
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => SignupProvider()),
         ChangeNotifierProvider(create: (context) => SigninProvider()),
+        ChangeNotifierProvider(create: (context) => NewSongProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {

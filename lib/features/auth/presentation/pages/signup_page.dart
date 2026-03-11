@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/helper/show_snackbar.dart';
-import 'package:flutter_spotify_clone/common/widgets/common_appbar.dart';
+import 'package:flutter_spotify_clone/features/common/presentation/widgets/common_appbar.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_images.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
 import 'package:flutter_spotify_clone/features/auth/presentation/pages/signin_page.dart';

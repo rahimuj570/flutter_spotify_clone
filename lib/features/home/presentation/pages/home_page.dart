@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spotify_clone/common/widgets/common_appbar.dart';
-import 'package:flutter_spotify_clone/features/media/presentation/pages/new_songs/new_song_page.dart';
+import 'package:flutter_spotify_clone/features/common/presentation/widgets/common_appbar.dart';
+import 'package:flutter_spotify_clone/features/media/presentation/pages/new_song_page.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/widgets/home_tab_bar_widget.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/widgets/top_hero_section.dart';
 
@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
-  List<Widget> _widget = [
+  final List<Widget> _widget = [
     NewSongPage(),
     Text('data'),
     Text('data'),
@@ -42,7 +42,10 @@ class _HomePageState extends State<HomePage>
           TopHeroSection(),
           homeTabBarWidget(tabController, context),
           Expanded(
-            child: TabBarView(controller: tabController, children: _widget),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TabBarView(controller: tabController, children: _widget),
+            ),
           ),
         ],
       ),
