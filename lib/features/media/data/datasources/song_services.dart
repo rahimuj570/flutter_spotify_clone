@@ -5,6 +5,9 @@ import 'package:flutter_spotify_clone/features/media/domain/entities/song_entity
 
 abstract class SongServices {
   Future<Either> getNewSongs();
+  Future<Either> getMoreNewSongs(
+    QueryDocumentSnapshot<Map<String, dynamic>> last,
+  );
 }
 
 class SongServicesImpl implements SongServices {
@@ -21,7 +24,34 @@ class SongServicesImpl implements SongServices {
       for (var d in snap.docs) {
         songList.add(SongResponse.fromJson(d.data()).toEntity());
       }
-      return Right(songList);
+      return Right({'last': snap.docs.last, 'list': songList});
+    } catch (e) {
+      return Left('Something went wrong!');
+    }
+  }
+
+  @override
+  Future<Either<dynamic, dynamic>> getMoreNewSongs(
+    QueryDocumentSnapshot<Map<String, dynamic>> last,
+  ) async {
+    try {
+      List<SongEntity> songList = [];
+      QuerySnapshot<Map<String, dynamic>> snap = await FirebaseFirestore
+          .instance
+          .collection('songs')
+          .orderBy('releaseDate', descending: true)
+          .startAfterDocument(last)
+          .limit(10)
+          .get();
+      if (snap.docs.isNotEmpty) {
+        for (var d in snap.docs) {
+          songList.add(SongResponse.fromJson(d.data()).toEntity());
+        }
+      }
+      return Right({
+        'last': snap.docs.isEmpty ? null : snap.docs.last,
+        'list': songList,
+      });
     } catch (e) {
       return Left('Something went wrong!');
     }

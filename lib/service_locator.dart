@@ -7,6 +7,7 @@ import 'package:flutter_spotify_clone/features/media/domain/repositories/song_re
 import 'package:flutter_spotify_clone/features/auth/domain/usecases/signin_usecase.dart';
 import 'package:flutter_spotify_clone/features/auth/domain/usecases/signin_with_google_usecase.dart';
 import 'package:flutter_spotify_clone/features/auth/domain/usecases/signup_usecase.dart';
+import 'package:flutter_spotify_clone/features/media/domain/usecases/get_more_new_songs_usecase.dart';
 import 'package:flutter_spotify_clone/features/media/domain/usecases/get_news_songs_usecase.dart';
 import 'package:get_it/get_it.dart';
 
@@ -23,4 +24,5 @@ Future<void> initilizedDependencies() async {
   getIt.registerSingleton<SongRepository>(SongRepositoryImpl());
   getIt.registerSingleton<SongServices>(SongServicesImpl());
   getIt.registerSingleton<GetNewsSongsUsecase>(GetNewsSongsUsecase());
+  getIt.registerSingleton<GetMoreNewSongsUsecase>(GetMoreNewSongsUsecase());
 }
