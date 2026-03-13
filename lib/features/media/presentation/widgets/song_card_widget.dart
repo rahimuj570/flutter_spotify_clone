@@ -16,17 +16,20 @@ class SongCardWidget extends StatelessWidget {
       children: [
         Stack(
           children: [
-            ClipRRect(
-              borderRadius: .circular(18),
-              child: CachedNetworkImage(
-                imageUrl:
-                    "https://spolify-spotify-clone.web.app/covers/${song.media}.jpg",
-                fit: .fill,
-                height: 185,
-                width: 150,
-                placeholder: (context, url) =>
-                    Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+            Hero(
+              tag: 'topThreeSong${song.media}',
+              child: ClipRRect(
+                borderRadius: .circular(18),
+                child: CachedNetworkImage(
+                  imageUrl:
+                      "https://spolify-spotify-clone.web.app/covers/${song.media}.jpg",
+                  fit: .fill,
+                  height: 185,
+                  width: 150,
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
               ),
             ),
             Positioned(

@@ -7,11 +7,14 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
   final bool titleShow;
   final bool isLeadingSearch;
   final bool actionMenuShow;
+  final String? textTile;
+
   const CommonAppbar({
     super.key,
     required this.titleShow,
     required this.isLeadingSearch,
     required this.actionMenuShow,
+    this.textTile,
   });
 
   @override
@@ -21,7 +24,12 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       title: titleShow
           ? SvgPicture.asset(width: 108, AppVectors.logoPath)
-          : null,
+          : Text(
+              textTile ?? '',
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium!.copyWith(fontWeight: .bold),
+            ),
       centerTitle: true,
 
       leading: Padding(

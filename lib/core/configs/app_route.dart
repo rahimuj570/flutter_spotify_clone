@@ -5,6 +5,8 @@ import 'package:flutter_spotify_clone/features/auth/presentation/pages/signup_pa
 import 'package:flutter_spotify_clone/features/choose_mode/presentation/pages/choose_mode_page.dart';
 import 'package:flutter_spotify_clone/features/get_started/presentation/pages/get_started_page.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/pages/home_page.dart';
+import 'package:flutter_spotify_clone/features/media/domain/entities/song_entity.dart';
+import 'package:flutter_spotify_clone/features/song_player/presentation/pages/song_player_page.dart';
 import 'package:flutter_spotify_clone/features/splash/presentation/pages/splash_page.dart';
 
 class AppRoute {
@@ -28,8 +30,17 @@ class AppRoute {
         break;
       case SignupPage.name:
         widget = SignupPage();
+        break;
       case HomePage.name:
         widget = HomePage();
+        break;
+      case SongPlayerPage.name:
+        {
+          SongEntity songEntity = settings.arguments as SongEntity;
+          widget = SongPlayerPage(songEntity: songEntity);
+          break;
+        }
+
       default:
         widget = Placeholder();
     }
