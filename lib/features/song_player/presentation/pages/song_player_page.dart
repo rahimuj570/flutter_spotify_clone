@@ -6,6 +6,7 @@ import 'package:flutter_spotify_clone/core/helper/show_snackbar.dart';
 import 'package:flutter_spotify_clone/features/common/presentation/widgets/common_appbar.dart';
 import 'package:flutter_spotify_clone/features/common/presentation/widgets/overflow_aware_text.dart';
 import 'package:flutter_spotify_clone/features/media/domain/entities/song_entity.dart';
+import 'package:flutter_spotify_clone/features/media/presentation/provders/new_song_provider.dart';
 import 'package:flutter_spotify_clone/features/song_player/presentation/providers/song_player_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
@@ -167,7 +168,15 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
                               icon: Icon(Icons.skip_next_rounded, size: 40),
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                SongEntity s = context
+                                    .read<NewSongProvider>()
+                                    .shuffleSong();
+                                widget.songEntity.changeValues(s);
+
+                                provider.loadSong(s.media);
+                              },
+
                               icon: Icon(Icons.shuffle_rounded, size: 35),
                             ),
                           ],

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -57,5 +59,19 @@ class NewSongProvider extends ChangeNotifier {
 
     _isFetchingMoreNewSongs = false;
     notifyListeners();
+  }
+
+  int _oldRand = 0;
+  SongEntity shuffleSong() {
+    int rand = Random().nextInt(
+      _moreSongList.length + _firstThreeSongList.length,
+    );
+    while (rand == _oldRand) {
+      rand = Random().nextInt(
+        _moreSongList.length + _firstThreeSongList.length,
+      );
+    }
+    _oldRand = rand;
+    return List<SongEntity>.from(_moreSongList + _firstThreeSongList)[rand];
   }
 }
