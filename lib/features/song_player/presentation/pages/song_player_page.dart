@@ -144,7 +144,9 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                provider.forwardBackward(isForward: false);
+                              },
                               icon: Icon(Icons.skip_previous_rounded, size: 40),
                             ),
                             IconButton(
@@ -159,7 +161,9 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                provider.forwardBackward(isForward: true);
+                              },
                               icon: Icon(Icons.skip_next_rounded, size: 40),
                             ),
                             IconButton(

@@ -56,4 +56,16 @@ class SongPlayerProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void forwardBackward({required bool isForward}) async {
+    Duration current = _player.position;
+    Duration total = _player.duration ?? Duration.zero;
+    if (isForward) {
+      Duration newPosition = current + const Duration(seconds: 10);
+      _player.seek(newPosition > total ? total : newPosition);
+    } else {
+      Duration newPosition = current - const Duration(seconds: 10);
+      _player.seek(newPosition < Duration.zero ? Duration.zero : newPosition);
+    }
+  }
 }
