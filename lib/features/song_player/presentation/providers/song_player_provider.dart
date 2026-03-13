@@ -47,4 +47,13 @@ class SongPlayerProvider extends ChangeNotifier {
   void seekSong(Duration position) {
     _player.seek(position);
   }
+
+  void repeateOnOff() {
+    if (_player.loopMode == LoopMode.off) {
+      _player.setLoopMode(LoopMode.all);
+    } else {
+      _player.setLoopMode(LoopMode.off);
+    }
+    notifyListeners();
+  }
 }

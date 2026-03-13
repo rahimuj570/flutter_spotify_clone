@@ -1,6 +1,7 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
 import 'package:flutter_spotify_clone/core/helper/show_snackbar.dart';
 import 'package:flutter_spotify_clone/features/common/presentation/widgets/common_appbar.dart';
 import 'package:flutter_spotify_clone/features/common/presentation/widgets/overflow_aware_text.dart';
@@ -110,7 +111,7 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
                       );
                     },
                   ),
-
+                  SizedBox(height: 20),
                   StreamBuilder<PlayerState>(
                     stream: provider.getAudioPlayer.playerStateStream,
                     builder: (context, snapshot) {
@@ -130,9 +131,42 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
                           icon: const Icon(Icons.pause_circle_filled_outlined),
                         );
                       } else {
-                        return IconButton(
-                          onPressed: provider.playPauseSong,
-                          icon: const Icon(Icons.play_circle_fill_outlined),
+                        return Row(
+                          mainAxisAlignment: .spaceBetween,
+                          children: [
+                            IconButton(
+                              onPressed: provider.repeateOnOff,
+                              icon: Icon(
+                                provider.getAudioPlayer.loopMode == LoopMode.all
+                                    ? Icons.repeat_on_rounded
+                                    : Icons.repeat_rounded,
+                                size: 35,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.skip_previous_rounded, size: 40),
+                            ),
+                            IconButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryColor,
+                              ),
+                              onPressed: provider.playPauseSong,
+                              icon: const Icon(
+                                Icons.play_arrow_rounded,
+                                color: Colors.white,
+                                size: 48,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.skip_next_rounded, size: 40),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.shuffle_rounded, size: 35),
+                            ),
+                          ],
                         );
                       }
                     },
