@@ -7,7 +7,9 @@ class BackgroundAudioHandler extends BaseAudioHandler
   final SongPlayerService _service;
 
   BackgroundAudioHandler(this._service) {
-    _service.getPlayerStateStream().map(_transformEvent).pipe(playbackState);
+    _service.getAudioPlayer.playbackEventStream
+        .map(_transformEvent)
+        .pipe(playbackState);
   }
 
   Future<void> loadSong(
@@ -28,25 +30,31 @@ class BackgroundAudioHandler extends BaseAudioHandler
     mediaItem.add(item);
   }
 
-  PlaybackState _transformEvent(PlayerState state) {
+  PlaybackState _transformEvent(PlaybackEvent event) {
+    final player = _service.getAudioPlayer;
+
     return PlaybackState(
       controls: [
         MediaControl.rewind,
-        state.playing ? MediaControl.pause : MediaControl.play,
+        player.playing ? MediaControl.pause : MediaControl.play,
         MediaControl.fastForward,
+        MediaControl.stop,
       ],
       androidCompactActionIndices: const [0, 1, 2],
-      playing: state.playing,
+      playing: player.playing,
       processingState: {
         ProcessingState.idle: AudioProcessingState.idle,
         ProcessingState.loading: AudioProcessingState.loading,
         ProcessingState.buffering: AudioProcessingState.buffering,
         ProcessingState.ready: AudioProcessingState.ready,
         ProcessingState.completed: AudioProcessingState.completed,
-      }[state.processingState]!,
-      updateTime: DateTime.now(),
-      updatePosition: _service.getCurrentPosition(),
-      bufferedPosition: _service.getBufferPosition(),
+      }[player.processingState]!,
+      updateTime: event.updateTime, // 🔑 timestamp
+      updatePosition: event.updatePosition, // 🔑 current position
+      bufferedPosition: event.bufferedPosition, // 🔑 buffer progress
+      speed: player.playing
+          ? player.speed
+          : 0.0, // 🔑 1.0 when playing, 0.0 when paused
     );
   }
 
@@ -64,5 +72,10 @@ class BackgroundAudioHandler extends BaseAudioHandler
   @override
   Future<void> rewind() async {
     _service.forwardBackward(isForward: false);
+  }
+
+  @override
+  Future<void> stop() async {
+    await _service.stopSong();
   }
 }

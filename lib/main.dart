@@ -10,8 +10,6 @@ import 'package:flutter_spotify_clone/service_locator.dart';
 import 'package:get_it/get_it.dart';
 
 void main() async {
-  BackgroundAudioHandler audioHandler;
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await initilizedDependencies();

@@ -3,6 +3,7 @@ import 'package:flutter_spotify_clone/features/common/presentation/widgets/commo
 import 'package:flutter_spotify_clone/features/media/presentation/pages/new_song_page.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/widgets/home_tab_bar_widget.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/widgets/top_hero_section.dart';
+import 'package:flutter_spotify_clone/features/media/presentation/pages/video_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage>
   late TabController tabController;
   final List<Widget> _widget = [
     NewSongPage(),
-    Text('data'),
+    VideoPage(),
     Text('data'),
     Text('data'),
   ];

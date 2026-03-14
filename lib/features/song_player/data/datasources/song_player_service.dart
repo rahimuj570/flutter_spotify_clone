@@ -4,6 +4,8 @@ import 'package:just_audio/just_audio.dart';
 class SongPlayerService {
   final AudioPlayer _player = AudioPlayer();
 
+  AudioPlayer get getAudioPlayer => _player;
+
   ///Load song by passing media name
   Future<Either> loadSong(String media) async {
     try {
@@ -73,5 +75,9 @@ class SongPlayerService {
 
   Duration getCurrentPosition() {
     return _player.position;
+  }
+
+  Future<void> stopSong() async {
+    await _player.stop();
   }
 }

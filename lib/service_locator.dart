@@ -1,18 +1,26 @@
 import 'package:flutter_spotify_clone/features/auth/data/datasources/auth_firebase_service.dart';
 import 'package:flutter_spotify_clone/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:flutter_spotify_clone/features/media/data/datasources/video_services.dart';
 import 'package:flutter_spotify_clone/features/media/data/repositories/song_repository_impl.dart';
 import 'package:flutter_spotify_clone/features/media/data/datasources/song_services.dart';
 import 'package:flutter_spotify_clone/features/auth/domain/repositories/auth_repository.dart';
+import 'package:flutter_spotify_clone/features/media/data/repositories/video_repository_impl.dart';
 import 'package:flutter_spotify_clone/features/media/domain/repositories/song_repository.dart';
 import 'package:flutter_spotify_clone/features/auth/domain/usecases/signin_usecase.dart';
 import 'package:flutter_spotify_clone/features/auth/domain/usecases/signin_with_google_usecase.dart';
 import 'package:flutter_spotify_clone/features/auth/domain/usecases/signup_usecase.dart';
+import 'package:flutter_spotify_clone/features/media/domain/repositories/video_repository.dart';
 import 'package:flutter_spotify_clone/features/media/domain/usecases/get_more_new_songs_usecase.dart';
 import 'package:flutter_spotify_clone/features/media/domain/usecases/get_news_songs_usecase.dart';
+import 'package:flutter_spotify_clone/features/media/domain/usecases/get_videos_usecase.dart';
 import 'package:flutter_spotify_clone/features/song_player/data/datasources/song_player_service.dart';
 import 'package:flutter_spotify_clone/features/song_player/data/repositories/song_player_repository_impl.dart';
 import 'package:flutter_spotify_clone/features/song_player/domain/repositories/song_player_repository.dart';
 import 'package:flutter_spotify_clone/features/song_player/domain/usecases/song_control_usecase.dart';
+import 'package:flutter_spotify_clone/features/video_player/data/datasources/video_player_service.dart';
+import 'package:flutter_spotify_clone/features/video_player/data/repositories/video_player_repository_impl.dart';
+import 'package:flutter_spotify_clone/features/video_player/domain/repositories/video_player_repository.dart';
+import 'package:flutter_spotify_clone/features/video_player/domain/usecases/get_random_four_videos_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -33,4 +41,14 @@ Future<void> initilizedDependencies() async {
   getIt.registerSingleton<SongPlayerService>(SongPlayerService());
   getIt.registerSingleton<SongPlayerRepository>(SongPlayerRepositoryImpl());
   getIt.registerSingleton<SongControlUsecase>(SongControlUsecase());
+
+  getIt.registerSingleton<VideoServices>(VideoServices());
+  getIt.registerSingleton<VideoRepository>(VideoRepositoryImpl());
+  getIt.registerSingleton<GetVideosUsecase>(GetVideosUsecase());
+
+  getIt.registerSingleton<VideoPlayerRepository>(VideoPlayerRepositoryImpl());
+  getIt.registerSingleton<VideoPlayerService>(VideoPlayerService());
+  getIt.registerSingleton<GetRandomFourVideosUsecase>(
+    GetRandomFourVideosUsecase(),
+  );
 }
