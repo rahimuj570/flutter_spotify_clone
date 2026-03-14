@@ -41,10 +41,10 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
       ),
       body: Consumer<SongPlayerProvider>(
         builder: (context, provider, child) {
-          if (provider.getError != null) {
+          if (provider.getLoadError != null) {
             showSnackBar(
               context: context,
-              msg: provider.getError!,
+              msg: provider.getLoadError!,
               isSuccess: false,
             );
           }
@@ -97,12 +97,11 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
                   SizedBox(height: 28),
 
                   StreamBuilder<Duration>(
-                    stream: provider.getAudioPlayer.positionStream,
+                    stream: provider.getPositionStream,
                     builder: (context, snapshot) {
                       final position = snapshot.data ?? Duration.zero;
-                      final buffered = provider.getAudioPlayer.bufferedPosition;
-                      final total =
-                          provider.getAudioPlayer.duration ?? Duration.zero;
+                      final buffered = provider.getBufferPosition;
+                      final total = provider.getSongDuration ?? Duration.zero;
 
                       return ProgressBar(
                         progress: position,
@@ -114,7 +113,7 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
                   ),
                   SizedBox(height: 20),
                   StreamBuilder<PlayerState>(
-                    stream: provider.getAudioPlayer.playerStateStream,
+                    stream: provider.getPlayerStateStream,
                     builder: (context, snapshot) {
                       final playerState = snapshot.data;
 
@@ -126,62 +125,57 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
                         return const Icon(Icons.music_note);
                       }
 
-                      if (playerState.playing) {
-                        return IconButton(
-                          onPressed: provider.playPauseSong,
-                          icon: const Icon(Icons.pause_circle_filled_outlined),
-                        );
-                      } else {
-                        return Row(
-                          mainAxisAlignment: .spaceBetween,
-                          children: [
-                            IconButton(
-                              onPressed: provider.repeateOnOff,
-                              icon: Icon(
-                                provider.getAudioPlayer.loopMode == LoopMode.all
-                                    ? Icons.repeat_on_rounded
-                                    : Icons.repeat_rounded,
-                                size: 35,
-                              ),
+                      return Row(
+                        mainAxisAlignment: .spaceBetween,
+                        children: [
+                          IconButton(
+                            onPressed: provider.repeateOnOff,
+                            icon: Icon(
+                              provider.getIsRepeating
+                                  ? Icons.repeat_on_rounded
+                                  : Icons.repeat_rounded,
+                              size: 35,
                             ),
-                            IconButton(
-                              onPressed: () {
-                                provider.forwardBackward(isForward: false);
-                              },
-                              icon: Icon(Icons.skip_previous_rounded, size: 40),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              provider.forwardBackward(isForward: false);
+                            },
+                            icon: Icon(Icons.skip_previous_rounded, size: 40),
+                          ),
+                          IconButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primaryColor,
                             ),
-                            IconButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor,
-                              ),
-                              onPressed: provider.playPauseSong,
-                              icon: const Icon(
-                                Icons.play_arrow_rounded,
-                                color: Colors.white,
-                                size: 48,
-                              ),
+                            onPressed: provider.playPauseSong,
+                            icon: Icon(
+                              playerState.playing
+                                  ? Icons.pause_outlined
+                                  : Icons.play_arrow_rounded,
+                              color: Colors.white,
+                              size: 48,
                             ),
-                            IconButton(
-                              onPressed: () {
-                                provider.forwardBackward(isForward: true);
-                              },
-                              icon: Icon(Icons.skip_next_rounded, size: 40),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                SongEntity s = context
-                                    .read<NewSongProvider>()
-                                    .shuffleSong();
-                                widget.songEntity.changeValues(s);
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              provider.forwardBackward(isForward: true);
+                            },
+                            icon: Icon(Icons.skip_next_rounded, size: 40),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              SongEntity s = context
+                                  .read<NewSongProvider>()
+                                  .shuffleSong();
+                              widget.songEntity.changeValues(s);
 
-                                provider.loadSong(s.media);
-                              },
+                              provider.loadSong(s.media);
+                            },
 
-                              icon: Icon(Icons.shuffle_rounded, size: 35),
-                            ),
-                          ],
-                        );
-                      }
+                            icon: Icon(Icons.shuffle_rounded, size: 35),
+                          ),
+                        ],
+                      );
                     },
                   ),
                 ],

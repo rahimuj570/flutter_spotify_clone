@@ -72,6 +72,7 @@ class NewSongProvider extends ChangeNotifier {
       );
     }
     _oldRand = rand;
-    return List<SongEntity>.from(_moreSongList + _firstThreeSongList)[rand];
+    final all = [..._moreSongList, ..._firstThreeSongList];
+    return all[rand];
   }
 }

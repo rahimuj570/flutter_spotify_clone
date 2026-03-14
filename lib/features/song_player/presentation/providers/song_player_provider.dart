@@ -1,13 +1,12 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spotify_clone/features/song_player/domain/usecases/song_control_usecase.dart';
+import 'package:flutter_spotify_clone/service_locator.dart';
 import 'package:just_audio/just_audio.dart';
 
 class SongPlayerProvider extends ChangeNotifier {
   String _songId = "";
-  String? _error = null;
-  String? get getError => _error;
-
-  final AudioPlayer _player = AudioPlayer();
-  AudioPlayer get getAudioPlayer => _player;
+  String? _loadError;
+  String? get getLoadError => _loadError;
 
   Duration? _songDuration;
   Duration? get getSongDuration => _songDuration;
@@ -15,57 +14,58 @@ class SongPlayerProvider extends ChangeNotifier {
   bool _isLoadingSong = false;
   bool get getIsLoadingSong => _isLoadingSong;
 
+  SongControlUsecase usecase = getIt<SongControlUsecase>();
+
   Future<void> loadSong(String media) async {
-    _error = null;
+    _loadError = null;
     if (_songId == media) {
       return;
     }
-    try {
-      _songId = media;
-      _isLoadingSong = true;
-      notifyListeners();
+    _songId = media;
+    _isLoadingSong = true;
+    notifyListeners();
 
-      _songDuration = await _player.setUrl(
-        "https://spolify-spotify-clone.web.app/songs/$media.mp3",
-      );
-    } catch (e) {
-      _error = e.toString();
-    } finally {
-      _isLoadingSong = false;
-      notifyListeners();
-    }
+    var res = await usecase.loadSong(media: media);
+    res.fold((l) => _loadError = l, (r) => _songDuration = r);
+
+    _isLoadingSong = false;
+    notifyListeners();
   }
+
+  String? _playError;
+  String? get getPlayError => _playError;
+  bool _isPlaying = false;
+  bool get getIsPlaying => _isPlaying;
 
   Future<void> playPauseSong() async {
-    if (_player.playing) {
-      await _player.pause();
-    } else {
-      _player.play();
-    }
+    _playError = null;
+    var res = await usecase.playPauseSong();
+    res.fold((l) => _playError = l, (r) => _isPlaying = r);
+    notifyListeners();
   }
 
-  void seekSong(Duration position) {
-    _player.seek(position);
+  Future<void> seekSong(Duration position) async {
+    await usecase.seekSong(position: position);
+    notifyListeners();
   }
+
+  bool _isRepeating = false;
+  bool get getIsRepeating => _isRepeating;
 
   void repeateOnOff() {
-    if (_player.loopMode == LoopMode.off) {
-      _player.setLoopMode(LoopMode.all);
-    } else {
-      _player.setLoopMode(LoopMode.off);
-    }
+    _isRepeating = usecase.repeateOnOff();
     notifyListeners();
   }
 
   void forwardBackward({required bool isForward}) async {
-    Duration current = _player.position;
-    Duration total = _player.duration ?? Duration.zero;
-    if (isForward) {
-      Duration newPosition = current + const Duration(seconds: 10);
-      _player.seek(newPosition > total ? total : newPosition);
-    } else {
-      Duration newPosition = current - const Duration(seconds: 10);
-      _player.seek(newPosition < Duration.zero ? Duration.zero : newPosition);
-    }
+    await usecase.forwardBackward(isForward: isForward);
+    notifyListeners();
   }
+
+  Stream<PlayerState> get getPlayerStateStream =>
+      usecase.getPlayerStateStream();
+
+  Stream<Duration> get getPositionStream => usecase.getPositionStream();
+
+  Duration get getBufferPosition => usecase.getBufferPosition();
 }
