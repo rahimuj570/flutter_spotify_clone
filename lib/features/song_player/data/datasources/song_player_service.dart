@@ -70,4 +70,8 @@ class SongPlayerService {
   Duration getBufferPosition() {
     return _player.bufferedPosition;
   }
+
+  Duration getCurrentPosition() {
+    return _player.position;
+  }
 }

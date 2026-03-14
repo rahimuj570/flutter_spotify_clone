@@ -7,7 +7,9 @@ import 'package:flutter_spotify_clone/features/common/presentation/widgets/commo
 import 'package:flutter_spotify_clone/features/common/presentation/widgets/overflow_aware_text.dart';
 import 'package:flutter_spotify_clone/features/media/domain/entities/song_entity.dart';
 import 'package:flutter_spotify_clone/features/media/presentation/provders/new_song_provider.dart';
+import 'package:flutter_spotify_clone/features/song_player/data/helper/background_audio_handler.dart';
 import 'package:flutter_spotify_clone/features/song_player/presentation/providers/song_player_provider.dart';
+import 'package:flutter_spotify_clone/service_locator.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +29,12 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<SongPlayerProvider>().loadSong(widget.songEntity.media);
+      getIt<BackgroundAudioHandler>().loadSong(
+        "https://spolify-spotify-clone.web.app/songs/${widget.songEntity.media}.mp3",
+        title: widget.songEntity.title,
+        artist: widget.songEntity.artists,
+        media: widget.songEntity.media,
+      );
     });
   }
 
