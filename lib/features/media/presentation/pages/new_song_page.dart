@@ -44,7 +44,13 @@ class _NewSongPageState extends State<NewSongPage> {
                 if (value.getNewSongs != null) {
                   return value.getNewSongs!.fold(
                     (l) {
-                      showSnackBar(context: context, msg: l, isSuccess: false);
+                      WidgetsBinding.instance.addPostFrameCallback(
+                        (timeStamp) => showSnackBar(
+                          context: context,
+                          msg: l,
+                          isSuccess: false,
+                        ),
+                      );
                       return Center(child: Text(l));
                     },
                     (r) {
@@ -54,7 +60,12 @@ class _NewSongPageState extends State<NewSongPage> {
                             SizedBox(width: 10),
                         itemBuilder: (context, index) {
                           return GestureDetector(
-                            onTap: () => _gotoMusicPlayer(context, list[index]),
+                            onTap: () => _gotoMusicPlayer(
+                              context,
+                              list[index],
+                              index,
+                              true,
+                            ),
                             child: SongCardWidget(song: list[index]),
                           );
                         },
@@ -99,8 +110,14 @@ class _NewSongPageState extends State<NewSongPage> {
                   }
                   return InkWell(
                     borderRadius: .circular(8),
-                    onTap: () => _gotoMusicPlayer(context, moreSongList[index]),
+                    onTap: () => _gotoMusicPlayer(
+                      context,
+                      moreSongList[index],
+                      index,
+                      false,
+                    ),
                     child: CustomListTileWidget(
+                      provider: value,
                       moreSongList: moreSongList,
                       index: index,
                     ),
@@ -116,8 +133,21 @@ class _NewSongPageState extends State<NewSongPage> {
     );
   }
 
-  void _gotoMusicPlayer(BuildContext context, SongEntity songEntity) {
-    Navigator.pushNamed(context, SongPlayerPage.name, arguments: songEntity);
+  void _gotoMusicPlayer(
+    BuildContext context,
+    SongEntity songEntity,
+    int index,
+    bool isFromFirstThreeSection,
+  ) {
+    Navigator.pushNamed(
+      context,
+      SongPlayerPage.name,
+      arguments: {
+        "songEntity": songEntity,
+        "index": index,
+        "isFromFirstThreeSection": isFromFirstThreeSection,
+      },
+    );
   }
 }
 
@@ -126,10 +156,12 @@ class CustomListTileWidget extends StatelessWidget {
     super.key,
     required this.moreSongList,
     required this.index,
+    required this.provider,
   });
 
   final List<SongEntity> moreSongList;
   final int index;
+  final NewSongProvider provider;
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +194,19 @@ class CustomListTileWidget extends StatelessWidget {
                 style: TextStyle(fontSize: 15),
               ),
               SizedBox(width: 20),
-              IconButton(onPressed: () {}, icon: Icon(Icons.favorite_border)),
+              IconButton(
+                onPressed: () {
+                  provider.addOrRemoveFavourite(
+                    moreSongList[index].media,
+                    index,
+                  );
+                },
+                icon: Icon(
+                  moreSongList[index].isInFavourite ?? false
+                      ? Icons.favorite_rounded
+                      : Icons.favorite_border,
+                ),
+              ),
             ],
           ),
         ),

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_clone/features/media/data/datasources/song_services.dart';
 import 'package:flutter_spotify_clone/features/media/domain/entities/song_entity.dart';
 import 'package:flutter_spotify_clone/features/media/domain/usecases/get_more_new_songs_usecase.dart';
 import 'package:flutter_spotify_clone/features/media/domain/usecases/get_news_songs_usecase.dart';
@@ -74,5 +75,43 @@ class NewSongProvider extends ChangeNotifier {
     _oldRand = rand;
     final all = [..._moreSongList, ..._firstThreeSongList];
     return all[rand];
+  }
+
+  bool _isChangingStatus = false;
+  bool get getIsChangingStatus => _isChangingStatus;
+  final SongServices _services = getIt<SongServices>();
+
+  Future<bool> isInFavourite(String uId, String mediaId) {
+    return _services.isInFavourite(uId, mediaId);
+  }
+
+  ///Return true on Right if added else returning false
+  void addOrRemoveFavourite(
+    String mediaId,
+    int index, {
+    bool? isFromTopThreeSection,
+  }) async {
+    _isChangingStatus = true;
+    notifyListeners();
+
+    var res = await _services.addOrRemoveFavourite(mediaId);
+    res.fold((l) {}, (r) {
+      if (r) {
+        if (isFromTopThreeSection ?? false == false) {
+          _firstThreeSongList[index].isInFavourite = true;
+        } else {
+          _moreSongList[index].isInFavourite = true;
+        }
+      } else {
+        if (isFromTopThreeSection ?? false == false) {
+          _firstThreeSongList[index].isInFavourite = false;
+        } else {
+          _moreSongList[index].isInFavourite = false;
+        }
+      }
+    });
+
+    _isChangingStatus = false;
+    notifyListeners();
   }
 }

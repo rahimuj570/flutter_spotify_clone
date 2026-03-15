@@ -6,6 +6,7 @@ class SongEntity {
   double duration;
   Timestamp releaseDate;
   String media;
+  bool? isInFavourite;
 
   SongEntity({
     required this.title,
@@ -13,6 +14,7 @@ class SongEntity {
     required this.duration,
     required this.releaseDate,
     required this.media,
+    required this.isInFavourite,
   });
 
   void changeValues(SongEntity e) {
@@ -21,5 +23,6 @@ class SongEntity {
     duration = e.duration;
     releaseDate = e.releaseDate;
     media = e.media;
+    isInFavourite = e.isInFavourite;
   }
 }

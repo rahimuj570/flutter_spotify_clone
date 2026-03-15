@@ -36,8 +36,17 @@ class AppRoute {
         break;
       case SongPlayerPage.name:
         {
-          SongEntity songEntity = settings.arguments as SongEntity;
-          widget = SongPlayerPage(songEntity: songEntity);
+          Map<dynamic, dynamic> args =
+              settings.arguments as Map<dynamic, dynamic>;
+          SongEntity songEntity = args['songEntity'] as SongEntity;
+          int index = args['index'] as int;
+          bool isFromFirstThreeSection =
+              args['isFromFirstThreeSection'] as bool;
+          widget = SongPlayerPage(
+            songEntity: songEntity,
+            index: index,
+            isFromTopThreeSection: isFromFirstThreeSection,
+          );
           break;
         }
 

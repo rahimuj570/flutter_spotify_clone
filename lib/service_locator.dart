@@ -10,6 +10,8 @@ import 'package:flutter_spotify_clone/features/auth/domain/usecases/signin_useca
 import 'package:flutter_spotify_clone/features/auth/domain/usecases/signin_with_google_usecase.dart';
 import 'package:flutter_spotify_clone/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:flutter_spotify_clone/features/media/domain/repositories/video_repository.dart';
+import 'package:flutter_spotify_clone/features/media/domain/usecases/add_or_remove_favourite_usecase.dart';
+import 'package:flutter_spotify_clone/features/media/domain/usecases/get_is_in_favourite_song_usecase.dart';
 import 'package:flutter_spotify_clone/features/media/domain/usecases/get_more_new_songs_usecase.dart';
 import 'package:flutter_spotify_clone/features/media/domain/usecases/get_news_songs_usecase.dart';
 import 'package:flutter_spotify_clone/features/media/domain/usecases/get_videos_usecase.dart';
@@ -50,5 +52,12 @@ Future<void> initilizedDependencies() async {
   getIt.registerSingleton<VideoPlayerService>(VideoPlayerService());
   getIt.registerSingleton<GetRandomFourVideosUsecase>(
     GetRandomFourVideosUsecase(),
+  );
+
+  getIt.registerSingleton<AddOrRemoveFavouriteUsecase>(
+    AddOrRemoveFavouriteUsecase(),
+  );
+  getIt.registerSingleton<GetIsInFavouriteSongUsecase>(
+    GetIsInFavouriteSongUsecase(),
   );
 }

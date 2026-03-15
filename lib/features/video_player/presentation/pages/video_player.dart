@@ -27,9 +27,16 @@ class _VideoPlayerState extends State<VideoPlayer> {
     );
     _controller = YoutubePlayerController(
       initialVideoId: widget.video.mediaId,
-      flags: YoutubePlayerFlags(autoPlay: false, mute: false),
+      flags: YoutubePlayerFlags(autoPlay: true, mute: false),
     );
     _controller.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -45,19 +52,20 @@ class _VideoPlayerState extends State<VideoPlayer> {
             ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(_controller.value.isFullScreen ? 0 : 10.0),
           child: YoutubePlayerBuilder(
             player: YoutubePlayer(controller: _controller),
             builder: (context, player) {
               return Column(
                 crossAxisAlignment: .start,
                 children: [
-                  // some widgets
                   Container(
                     decoration: BoxDecoration(
-                      border: .all(color: AppColors.primaryColor, width: 3),
+                      border: _controller.value.isFullScreen
+                          ? null
+                          : .all(color: AppColors.primaryColor, width: 3),
                     ),
-                    child: player,
+                    child: Hero(tag: widget.video.mediaId, child: player),
                   ),
                   SizedBox(height: 20),
                   Row(

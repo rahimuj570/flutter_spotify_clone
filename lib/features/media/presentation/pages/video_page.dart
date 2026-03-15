@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
 import 'package:flutter_spotify_clone/features/media/domain/entities/video_entity.dart';
@@ -62,24 +63,28 @@ class Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          opacity: .8,
-          fit: .fill,
-          image: NetworkImage(
-            YoutubePlayer.getThumbnail(videoId: video.mediaId),
+    return Hero(
+      tag: video.mediaId,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: .circular(18),
+          image: DecorationImage(
+            opacity: .8,
+            fit: .fill,
+            image: CachedNetworkImageProvider(
+              YoutubePlayer.getThumbnail(videoId: video.mediaId),
+            ),
           ),
+          color: Colors.teal,
         ),
-        color: Colors.teal,
-      ),
-      child: Center(
-        child: Container(
-          decoration: BoxDecoration(shape: .circle, color: Colors.black),
-          child: Icon(
-            Icons.play_circle_fill_rounded,
-            size: 50,
-            color: AppColors.primaryColor,
+        child: Center(
+          child: Container(
+            decoration: BoxDecoration(shape: .circle, color: Colors.black),
+            child: Icon(
+              Icons.play_circle_fill_rounded,
+              size: 50,
+              color: AppColors.primaryColor,
+            ),
           ),
         ),
       ),

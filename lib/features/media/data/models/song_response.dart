@@ -7,6 +7,7 @@ class SongResponse {
   final double duration;
   final Timestamp releaseDate;
   final String media;
+  bool? isInFavourite;
 
   SongResponse({
     required this.title,
@@ -14,6 +15,7 @@ class SongResponse {
     required this.duration,
     required this.releaseDate,
     required this.media,
+    required this.isInFavourite,
   });
 
   factory SongResponse.fromJson(Map<String, dynamic> map) {
@@ -23,11 +25,13 @@ class SongResponse {
       duration: map['duration'] as double,
       releaseDate: map['releaseDate'] as Timestamp,
       media: map['media'],
+      isInFavourite: null,
     );
   }
 
   SongEntity toEntity() {
     return SongEntity(
+      isInFavourite: isInFavourite,
       title: title,
       artists: artists,
       duration: duration,

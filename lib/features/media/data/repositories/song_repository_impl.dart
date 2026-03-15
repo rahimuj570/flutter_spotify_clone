@@ -16,4 +16,14 @@ class SongRepositoryImpl implements SongRepository {
   ) {
     return getIt<SongServices>().getMoreNewSongs(last);
   }
+
+  @override
+  Future<Either<String, bool>> addOrRemoveFavourite(String mediaId) {
+    return getIt<SongServices>().addOrRemoveFavourite(mediaId);
+  }
+
+  @override
+  Future<bool> isInFavourite(String uId, String mediaId) {
+    return getIt<SongServices>().isInFavourite(uId, mediaId);
+  }
 }

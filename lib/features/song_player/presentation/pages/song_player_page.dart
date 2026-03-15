@@ -14,9 +14,16 @@ import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 
 class SongPlayerPage extends StatefulWidget {
-  const SongPlayerPage({super.key, required this.songEntity});
+  const SongPlayerPage({
+    super.key,
+    required this.songEntity,
+    required this.isFromTopThreeSection,
+    required this.index,
+  });
   static const String name = '/song_player';
   final SongEntity songEntity;
+  final bool isFromTopThreeSection;
+  final int index;
 
   @override
   State<SongPlayerPage> createState() => _SongPlayerPageState();
@@ -50,11 +57,13 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
       body: Consumer<SongPlayerProvider>(
         builder: (context, provider, child) {
           if (provider.getLoadError != null) {
-            showSnackBar(
-              context: context,
-              msg: provider.getLoadError!,
-              isSuccess: false,
-            );
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              showSnackBar(
+                context: context,
+                msg: provider.getLoadError!,
+                isSuccess: false,
+              );
+            });
           }
 
           return SingleChildScrollView(
@@ -96,9 +105,32 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
                         ],
                       ),
 
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.favorite_border_rounded),
+                      Consumer<NewSongProvider>(
+                        builder: (context, newSongProvider, child) =>
+                            IconButton(
+                              onPressed: () {
+                                newSongProvider.addOrRemoveFavourite(
+                                  widget.songEntity.media,
+                                  widget.index,
+                                  isFromTopThreeSection:
+                                      widget.isFromTopThreeSection,
+                                );
+                              },
+                              icon: Icon(
+                                widget.isFromTopThreeSection
+                                    ? (newSongProvider
+                                              .getFirstThreeSongList[widget
+                                                  .index]
+                                              .isInFavourite!)
+                                          ? Icons.favorite_rounded
+                                          : Icons.favorite_border
+                                    : newSongProvider
+                                          .getMoreSongList[widget.index]
+                                          .isInFavourite!
+                                    ? Icons.favorite_rounded
+                                    : Icons.favorite_border,
+                              ),
+                            ),
                       ),
                     ],
                   ),

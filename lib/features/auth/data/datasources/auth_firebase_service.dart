@@ -102,7 +102,7 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
 
     if (existingUser.docs.isEmpty) {
       // Only add if not found
-      usersRef.add({'fullName': name, 'email': email});
+      usersRef.doc(email).set({'fullName': name, 'email': email});
     }
   }
 

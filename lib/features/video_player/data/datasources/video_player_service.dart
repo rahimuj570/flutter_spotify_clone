@@ -3,7 +3,7 @@ import 'package:flutter_spotify_clone/features/media/domain/entities/video_entit
 import 'package:flutter_spotify_clone/service_locator.dart';
 
 class VideoPlayerService {
-  List<VideoEntity> _videos = getIt<VideoServices>().getVideos();
+  final List<VideoEntity> _videos = getIt<VideoServices>().getVideos();
 
   List<VideoEntity> getRandomFourVideos(String mediaId) {
     List<VideoEntity> t = [];
