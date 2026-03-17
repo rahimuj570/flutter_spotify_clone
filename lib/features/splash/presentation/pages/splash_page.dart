@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/configs/assets/app_vectors.dart';
 import 'package:flutter_spotify_clone/features/auth/data/datasources/auth_firebase_service.dart';
 import 'package:flutter_spotify_clone/features/get_started/presentation/pages/get_started_page.dart';
-import 'package:flutter_spotify_clone/features/home/presentation/pages/home_page.dart';
+import 'package:flutter_spotify_clone/features/home/presentation/pages/root_page.dart';
 import 'package:flutter_spotify_clone/service_locator.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -30,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
   void _goToGetStarted() async {
     await Future.delayed(Duration(seconds: 3));
     if (getIt<AuthFirebaseService>().getUser() != null) {
-      Navigator.pushReplacementNamed(context, HomePage.name);
+      Navigator.pushReplacementNamed(context, RootPage.name);
     } else {
       Navigator.pushReplacementNamed(context, GetStartedPage.name);
     }

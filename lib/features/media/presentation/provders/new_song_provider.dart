@@ -97,13 +97,13 @@ class NewSongProvider extends ChangeNotifier {
     var res = await _services.addOrRemoveFavourite(mediaId);
     res.fold((l) {}, (r) {
       if (r) {
-        if (isFromTopThreeSection ?? false == false) {
+        if (isFromTopThreeSection ?? false) {
           _firstThreeSongList[index].isInFavourite = true;
         } else {
           _moreSongList[index].isInFavourite = true;
         }
       } else {
-        if (isFromTopThreeSection ?? false == false) {
+        if (isFromTopThreeSection ?? false) {
           _firstThreeSongList[index].isInFavourite = false;
         } else {
           _moreSongList[index].isInFavourite = false;
