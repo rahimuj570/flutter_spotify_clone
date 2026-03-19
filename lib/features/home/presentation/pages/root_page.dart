@@ -4,7 +4,7 @@ import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
 import 'package:flutter_spotify_clone/features/favourite/presentation/pages/favourite_page.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/pages/home_page.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/providers/root_page_provider.dart';
-import 'package:flutter_spotify_clone/features/user/presentation/pages/user_page.dart';
+import 'package:flutter_spotify_clone/features/auth/presentation/pages/user_page.dart';
 import 'package:provider/provider.dart';
 
 class RootPage extends StatefulWidget {

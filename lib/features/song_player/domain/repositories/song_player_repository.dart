@@ -11,4 +11,6 @@ abstract class SongPlayerRepository {
   Stream<PlayerState> getPlayerStateStream();
   Stream<Duration> getPositionStream();
   Duration getBufferPosition();
+
+  Future<Either<String, bool>> addToHistory(String mediaId);
 }

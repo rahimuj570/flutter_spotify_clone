@@ -46,4 +46,9 @@ class SongPlayerRepositoryImpl implements SongPlayerRepository {
   Stream<Duration> getPositionStream() {
     return service.getPositionStream();
   }
+
+  @override
+  Future<Either<String, bool>> addToHistory(String mediaId) {
+    return getIt<SongPlayerService>().addToHistory(mediaId);
+  }
 }

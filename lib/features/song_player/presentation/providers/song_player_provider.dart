@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spotify_clone/features/song_player/data/datasources/song_player_service.dart';
 import 'package:flutter_spotify_clone/features/song_player/domain/usecases/song_control_usecase.dart';
 import 'package:flutter_spotify_clone/service_locator.dart';
 import 'package:just_audio/just_audio.dart';
@@ -17,6 +18,8 @@ class SongPlayerProvider extends ChangeNotifier {
   SongControlUsecase usecase = getIt<SongControlUsecase>();
 
   Future<void> loadSong(String media) async {
+    await getIt<SongPlayerService>().addToHistory(media);
+
     _loadError = null;
     if (_songId == media) {
       return;

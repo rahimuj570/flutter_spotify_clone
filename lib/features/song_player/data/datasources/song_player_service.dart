@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter_spotify_clone/features/auth/data/datasources/auth_firebase_service.dart';
+import 'package:flutter_spotify_clone/features/auth/domain/entities/user_entity.dart';
+import 'package:flutter_spotify_clone/service_locator.dart';
 import 'package:just_audio/just_audio.dart';
 
 class SongPlayerService {
@@ -79,5 +83,20 @@ class SongPlayerService {
 
   Future<void> stopSong() async {
     await _player.stop();
+  }
+
+  Future<Either<String, bool>> addToHistory(String mediaId) async {
+    UserEntity user = getIt<AuthFirebaseService>().getUser()!;
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.email)
+          .collection('histories')
+          .doc(mediaId)
+          .set({'mediaId': mediaId, 'timeStamp': Timestamp.now()});
+      return Right(true);
+    } catch (e) {
+      return Left(e.toString());
+    }
   }
 }
