@@ -1,5 +1,9 @@
 import 'package:flutter_spotify_clone/features/auth/data/datasources/auth_firebase_service.dart';
 import 'package:flutter_spotify_clone/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:flutter_spotify_clone/features/favourite/data/datasources/favourite_service.dart';
+import 'package:flutter_spotify_clone/features/favourite/data/repositories/favourite_song_repository_impl.dart';
+import 'package:flutter_spotify_clone/features/favourite/domain/repositories/favourite_songs_repositories.dart';
+import 'package:flutter_spotify_clone/features/favourite/domain/usecases/fetch_favourite_songs_usecase.dart';
 import 'package:flutter_spotify_clone/features/media/data/datasources/video_services.dart';
 import 'package:flutter_spotify_clone/features/media/data/repositories/song_repository_impl.dart';
 import 'package:flutter_spotify_clone/features/media/data/datasources/song_services.dart';
@@ -59,5 +63,13 @@ Future<void> initilizedDependencies() async {
   );
   getIt.registerSingleton<GetIsInFavouriteSongUsecase>(
     GetIsInFavouriteSongUsecase(),
+  );
+
+  getIt.registerSingleton<FavouriteService>(FavouriteServiceImpl());
+  getIt.registerSingleton<FavouriteSongRepositories>(
+    FavouriteSongRepositoryImpl(),
+  );
+  getIt.registerSingleton<FetchFavouriteSongsUsecase>(
+    FetchFavouriteSongsUsecase(),
   );
 }

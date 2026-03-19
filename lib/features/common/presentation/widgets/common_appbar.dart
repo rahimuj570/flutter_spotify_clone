@@ -8,6 +8,8 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
   final bool isLeadingSearch;
   final bool actionMenuShow;
   final String? textTile;
+  final Color? color;
+  final VoidCallback? backAction;
 
   const CommonAppbar({
     super.key,
@@ -15,11 +17,14 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
     required this.isLeadingSearch,
     required this.actionMenuShow,
     this.textTile,
+    this.color,
+    this.backAction,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      foregroundColor: color,
       surfaceTintColor: Colors.transparent,
       backgroundColor: Colors.transparent,
       title: titleShow
@@ -35,9 +40,8 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
       leading: Padding(
         padding: const EdgeInsets.only(left: 8.0),
         child: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () =>
+              backAction == null ? Navigator.pop(context) : backAction!(),
           icon: Container(
             alignment: Alignment.center,
             height: 30,

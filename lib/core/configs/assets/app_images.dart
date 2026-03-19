@@ -7,4 +7,5 @@ class AppImages {
   static const googleIcon = "${_basePath}google.png";
   static const appleIcon = "${_basePath}apple.png";
   static const homeTopArtistImagePath = "${_basePath}home_artist.png";
+  static const favouriteImagePath = "${_basePath}azam_khan.png";
 }

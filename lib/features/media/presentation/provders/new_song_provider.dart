@@ -27,6 +27,8 @@ class NewSongProvider extends ChangeNotifier {
   List<SongEntity> get getMoreSongList => _moreSongList;
 
   Future<void> fetchNewSongs() async {
+    _firstThreeSongList.clear();
+    _moreSongList.clear();
     _isFetchingNewSongs = true;
     notifyListeners();
     _response = await getIt<GetNewsSongsUsecase>().call(null);
