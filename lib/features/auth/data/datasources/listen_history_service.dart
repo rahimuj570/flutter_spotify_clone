@@ -6,12 +6,12 @@ import 'package:flutter_spotify_clone/features/media/domain/entities/song_entity
 import 'package:flutter_spotify_clone/service_locator.dart';
 
 abstract class ListenHistoryService {
-  Future<Either<String, List<SongEntity>>> fetchFavouriteSongs();
+  Future<Either<String, List<SongEntity>>> fetchListenHistorySongs();
 }
 
 class ListenHistoryServiceImpl implements ListenHistoryService {
   @override
-  Future<Either<String, List<SongEntity>>> fetchFavouriteSongs() async {
+  Future<Either<String, List<SongEntity>>> fetchListenHistorySongs() async {
     try {
       UserEntity? user = getIt<AuthFirebaseService>().getUser();
       List<SongEntity> songList = [];
@@ -21,7 +21,7 @@ class ListenHistoryServiceImpl implements ListenHistoryService {
         QuerySnapshot snapshot = await FirebaseFirestore.instance
             .collection('users')
             .doc(user.email)
-            .collection('favourites')
+            .collection('histories')
             .get();
 
         List<String> mediaList = [];

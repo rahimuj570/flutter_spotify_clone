@@ -1,6 +1,10 @@
 import 'package:flutter_spotify_clone/features/auth/data/datasources/auth_firebase_service.dart';
+import 'package:flutter_spotify_clone/features/auth/data/datasources/listen_history_service.dart';
 import 'package:flutter_spotify_clone/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:flutter_spotify_clone/features/auth/data/repositories/listen_history_repository_impl.dart';
+import 'package:flutter_spotify_clone/features/auth/domain/repositories/listen_history_repository.dart';
 import 'package:flutter_spotify_clone/features/auth/domain/usecases/get_current_user_usecase.dart';
+import 'package:flutter_spotify_clone/features/auth/domain/usecases/get_listen_history_usecase.dart';
 import 'package:flutter_spotify_clone/features/favourite/data/datasources/favourite_service.dart';
 import 'package:flutter_spotify_clone/features/favourite/data/repositories/favourite_song_repository_impl.dart';
 import 'package:flutter_spotify_clone/features/favourite/domain/repositories/favourite_songs_repositories.dart';
@@ -78,4 +82,10 @@ Future<void> initilizedDependencies() async {
   getIt.registerSingleton<GetCurrentUserUsecase>(GetCurrentUserUsecase());
 
   getIt.registerSingleton<AddToHistoryUsecase>(AddToHistoryUsecase());
+
+  getIt.registerSingleton<ListenHistoryRepository>(
+    ListenHistoryRepositoryImpl(),
+  );
+  getIt.registerSingleton<ListenHistoryService>(ListenHistoryServiceImpl());
+  getIt.registerSingleton<GetListenHistoryUsecase>(GetListenHistoryUsecase());
 }
