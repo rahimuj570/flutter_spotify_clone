@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
 import 'package:flutter_spotify_clone/core/extensions/is_dark_mode_extension.dart';
 import 'package:flutter_spotify_clone/core/helper/show_snackbar.dart';
 import 'package:flutter_spotify_clone/features/auth/presentation/providers/listen_history_provider.dart';
 import 'package:flutter_spotify_clone/features/auth/presentation/providers/user_provider.dart';
+import 'package:flutter_spotify_clone/features/choose_mode/presentation/providers/theme_provider.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/providers/root_page_provider.dart';
 import 'package:flutter_spotify_clone/features/media/domain/entities/song_entity.dart';
 import 'package:provider/provider.dart';
@@ -84,8 +86,16 @@ class _UserPageState extends State<UserPage> {
                   ),
                   actions: [
                     IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.more_vert_outlined),
+                      onPressed: () {
+                        context.read<ThemeProvider>().changeThemeMode(
+                          isDark: !context.isDarkMode,
+                        );
+                      },
+                      icon: Icon(
+                        context.isDarkMode
+                            ? Icons.dark_mode_rounded
+                            : Icons.light_mode_rounded,
+                      ),
                     ),
                   ],
                 ),
@@ -99,7 +109,9 @@ class _UserPageState extends State<UserPage> {
                           bottomLeft: Radius.circular(50),
                           bottomRight: Radius.circular(50),
                         ),
-                        color: Colors.white,
+                        color: context.isDarkMode
+                            ? AppColors.darkNavBarColor
+                            : Colors.white,
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

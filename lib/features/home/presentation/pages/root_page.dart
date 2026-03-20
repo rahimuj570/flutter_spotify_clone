@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
+import 'package:flutter_spotify_clone/core/extensions/is_dark_mode_extension.dart';
 import 'package:flutter_spotify_clone/features/favourite/presentation/pages/favourite_page.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/pages/home_page.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/providers/root_page_provider.dart';
@@ -38,6 +39,7 @@ class _RootPageState extends State<RootPage> {
           height: 56,
           index: value.getIndex,
           backgroundColor: AppColors.primaryColor,
+          color: context.isDarkMode ? AppColors.darkNavBarColor : Colors.white,
           items: <Widget>[
             Icon(Icons.home, size: 30),
             Icon(Icons.favorite, size: 30),

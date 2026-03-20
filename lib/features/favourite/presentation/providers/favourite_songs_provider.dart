@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/features/favourite/domain/usecases/fetch_favourite_songs_usecase.dart';
 import 'package:flutter_spotify_clone/features/media/domain/entities/song_entity.dart';
@@ -42,11 +43,12 @@ class FavouriteSongsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addOrRemoveFavourite(String media, int index) async {
+  Future<Either> addOrRemoveFavourite(String media, int index) async {
     var res = await getIt<AddOrRemoveFavouriteUsecase>().addOrRemoveFavourite(
       media,
     );
     _favouriteSongList.removeAt(index);
     notifyListeners();
+    return res;
   }
 }

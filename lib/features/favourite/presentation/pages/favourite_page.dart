@@ -109,11 +109,22 @@ class _FavouritePageState extends State<FavouritePage> {
                                   ),
                                   SizedBox(width: 20),
                                   IconButton(
-                                    onPressed: () {
-                                      provider.addOrRemoveFavourite(
-                                        songList[index].media,
-                                        index,
-                                      );
+                                    onPressed: () async {
+                                      var res = await provider
+                                          .addOrRemoveFavourite(
+                                            songList[index].media,
+                                            index,
+                                          );
+                                      res.fold((l) {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((timeStamp) {
+                                              showSnackBar(
+                                                context: context,
+                                                msg: l,
+                                                isSuccess: false,
+                                              );
+                                            });
+                                      }, (r) {});
                                     },
                                     icon: Icon(Icons.favorite_rounded),
                                   ),
