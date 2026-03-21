@@ -9,6 +9,7 @@ import 'package:flutter_spotify_clone/features/auth/presentation/pages/signin_pa
 import 'package:flutter_spotify_clone/features/auth/presentation/providers/signin_provider.dart';
 import 'package:flutter_spotify_clone/features/auth/presentation/providers/signup_provider.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/pages/home_page.dart';
+import 'package:flutter_spotify_clone/features/home/presentation/pages/root_page.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatefulWidget {
@@ -178,7 +179,7 @@ class _SignupPageState extends State<SignupPage> {
                                   (r) {
                                     Navigator.pushReplacementNamed(
                                       context,
-                                      HomePage.name,
+                                      RootPage.name,
                                     );
                                   },
                                 );
