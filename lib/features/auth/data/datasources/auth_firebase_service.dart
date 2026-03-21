@@ -11,6 +11,7 @@ abstract class AuthFirebaseService {
   Future<Either> signinWithGoogle();
   Future<Either> signup(CreateUserRequest createUserRequest);
   UserEntity? getUser();
+  Future<Either> singout();
 }
 
 class AuthFirebaseServiceImpl implements AuthFirebaseService {
@@ -117,5 +118,15 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
       );
     }
     return null;
+  }
+
+  @override
+  Future<Either<dynamic, bool>> singout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      return Right(true);
+    } catch (e) {
+      return Left(e.toString());
+    }
   }
 }

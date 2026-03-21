@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spotify_clone/core/configs/themes/app_colors.dart';
 import 'package:flutter_spotify_clone/core/extensions/is_dark_mode_extension.dart';
 import 'package:flutter_spotify_clone/core/helper/show_snackbar.dart';
+import 'package:flutter_spotify_clone/features/auth/domain/usecases/signout_user_usecase.dart';
+import 'package:flutter_spotify_clone/features/auth/presentation/pages/signin_page.dart';
 import 'package:flutter_spotify_clone/features/auth/presentation/providers/listen_history_provider.dart';
 import 'package:flutter_spotify_clone/features/auth/presentation/providers/user_provider.dart';
 import 'package:flutter_spotify_clone/features/choose_mode/presentation/providers/theme_provider.dart';
 import 'package:flutter_spotify_clone/features/home/presentation/providers/root_page_provider.dart';
 import 'package:flutter_spotify_clone/features/media/domain/entities/song_entity.dart';
+import 'package:flutter_spotify_clone/service_locator.dart';
 import 'package:provider/provider.dart';
 
 class UserPage extends StatefulWidget {
@@ -120,7 +123,26 @@ class _UserPageState extends State<UserPage> {
                           Text(userProvider.userEntity?.email ?? 'N/A'),
                           Text(userProvider.userEntity?.fullName ?? 'N/A'),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              var res = await getIt<SignoutUserUsecase>()
+                                  .signout();
+                              res.fold(
+                                (l) {
+                                  WidgetsBinding.instance.addPostFrameCallback((
+                                    timeStamp,
+                                  ) {
+                                    showSnackBar(
+                                      context: context,
+                                      msg: l,
+                                      isSuccess: false,
+                                    );
+                                  });
+                                },
+                                (r) {
+                                  Navigator.pushNamed(context, SigninPage.name);
+                                },
+                              );
+                            },
                             icon: Icon(Icons.logout),
                           ),
                         ],

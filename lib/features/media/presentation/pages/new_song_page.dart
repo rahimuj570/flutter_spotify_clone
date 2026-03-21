@@ -53,7 +53,23 @@ class _NewSongPageState extends State<NewSongPage> {
                             isSuccess: false,
                           ),
                         );
-                        return Center(child: Text(l));
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            await context
+                                .read<NewSongProvider>()
+                                .fetchNewSongs();
+                            await context
+                                .read<NewSongProvider>()
+                                .fetchMoreNewSongs();
+                          },
+                          child: ListView(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            children: [
+                              SizedBox(height: 200), // optional spacer
+                              Center(child: Text(l)),
+                            ],
+                          ),
+                        );
                       },
                       (r) {
                         List<SongEntity> list = value.getFirstThreeSongList;

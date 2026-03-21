@@ -20,4 +20,9 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<dynamic, dynamic>> signinWithGoogle() async {
     return await getIt<AuthFirebaseService>().signinWithGoogle();
   }
+
+  @override
+  Future<Either<dynamic, dynamic>> signOut() {
+    return getIt<AuthFirebaseService>().singout();
+  }
 }
