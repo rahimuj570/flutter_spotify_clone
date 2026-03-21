@@ -37,4 +37,8 @@ class SongControlUsecase {
   Duration getBufferPosition() {
     return repository.getBufferPosition();
   }
+
+  void disposeAudio() {
+    getIt<SongPlayerRepository>().disposeAudio();
+  }
 }

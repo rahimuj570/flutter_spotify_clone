@@ -13,4 +13,5 @@ abstract class SongPlayerRepository {
   Duration getBufferPosition();
 
   Future<Either<String, bool>> addToHistory(String mediaId);
+  void disposeAudio();
 }

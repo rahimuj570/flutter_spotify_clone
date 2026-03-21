@@ -51,4 +51,9 @@ class SongPlayerRepositoryImpl implements SongPlayerRepository {
   Future<Either<String, bool>> addToHistory(String mediaId) {
     return getIt<SongPlayerService>().addToHistory(mediaId);
   }
+
+  @override
+  void disposeAudio() {
+    getIt<SongPlayerService>().disposeAudio();
+  }
 }

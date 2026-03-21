@@ -23,6 +23,10 @@ class SongPlayerService {
     }
   }
 
+  void disposeAudio() {
+    _player.dispose();
+  }
+
   Future<Either<dynamic, bool>> playPauseSong() async {
     try {
       if (_player.playing) {
